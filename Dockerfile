@@ -1,7 +1,11 @@
-FROM debian:stretch-slim
+# ============== #
+# STAGE 0: Build #
+# ============== #
+
+FROM debian:stretch-slim as builder
 
 # Package Information
-LABEL version="0.0.1"
+LABEL version="0.1.0"
 LABEL container="xplex"
 LABEL maintainer="Soumya Deb <debloper@gmail.com>"
 
@@ -38,24 +42,38 @@ RUN wget ${SRC_NGINX} && \
 RUN cat *.tar.gz | tar -izxvf -
 
 # Switch to nginx source path
-WORKDIR nginx-${v_NGINX}
+RUN mv nginx-${v_NGINX} nginx
+WORKDIR nginx
 
 # Configure nginx source with modules
 RUN ./configure --with-openssl=../openssl-${vm_OSSL} --with-pcre=../pcre-${vm_PCRE} --with-zlib=../zlib-${vm_ZLIB} --add-module=../nginx-rtmp-module-${vm_RTMP}
 
 # Build and install nginx
-RUN make && make install
+RUN make
 
-# Expose ports (HTTP, HTTPS & RTMP)
-EXPOSE 80
-EXPOSE 443
-EXPOSE 1935
 
-# Cleanup stuff that are not required anymore
-RUN apt-get remove -y gcc g++ perl-modules make wget && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /tmp/xplex
+# ============= #
+# STAGE 1: Lean #
+# ============= #
 
-# Start nginx
+FROM debian:stretch-slim
+
+# Installing Nginx, manually (to avoid dependency on make)
+RUN mkdir -p  /usr/local/nginx \
+              /usr/local/nginx/sbin \
+              /usr/local/nginx/conf \
+              /usr/local/nginx/logs
+
+COPY --from=builder /tmp/xplex/nginx/objs/nginx /usr/local/nginx/sbin/nginx
+
+COPY --from=builder /tmp/xplex/nginx/conf/mime.types \
+                    /tmp/xplex/nginx/conf/fastcgi_params \
+                    /tmp/xplex/nginx/conf/fastcgi.conf \
+                    /tmp/xplex/nginx/conf/uwsgi_params \
+                    /tmp/xplex/nginx/conf/scgi_params \
+                    /tmp/xplex/nginx/conf/nginx.conf \
+                    /usr/local/nginx/conf/
+
+COPY --from=builder /tmp/xplex/nginx/html /usr/local/nginx/html
+
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
