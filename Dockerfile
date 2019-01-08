@@ -25,7 +25,6 @@ ENV MODULE_SRC_ZLIB=http://zlib.net/zlib-${vm_ZLIB}.tar.gz
 
 # Update the environment
 RUN apt-get update && \
-    apt-get upgrade -y && \
     apt-get install -y gcc g++ perl-modules make wget
 
 # Create a temporary build directory
@@ -56,7 +55,7 @@ RUN make
 # STAGE 1: Lean #
 # ============= #
 
-FROM debian:stretch-slim
+FROM debian:stretch-slim as lean
 
 # Installing Nginx, manually (to avoid dependency on make)
 RUN mkdir -p  /usr/local/nginx \
@@ -71,9 +70,13 @@ COPY --from=builder /tmp/xplex/nginx/conf/mime.types \
                     /tmp/xplex/nginx/conf/fastcgi.conf \
                     /tmp/xplex/nginx/conf/uwsgi_params \
                     /tmp/xplex/nginx/conf/scgi_params \
-                    /tmp/xplex/nginx/conf/nginx.conf \
                     /usr/local/nginx/conf/
 
 COPY --from=builder /tmp/xplex/nginx/html /usr/local/nginx/html
+
+COPY conf/*.conf /usr/local/nginx/conf/
+
+EXPOSE 80
+EXPOSE 1935
 
 CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
