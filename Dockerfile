@@ -75,8 +75,9 @@ COPY --from=builder /tmp/xplex/nginx/conf/mime.types \
 COPY --from=builder /tmp/xplex/nginx/html /usr/local/nginx/html
 
 COPY conf/*.conf /usr/local/nginx/conf/
+COPY setup/lean.sh ./
 
 EXPOSE 80
 EXPOSE 1935
 
-CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
+CMD ./lean.sh
