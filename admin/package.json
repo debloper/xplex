@@ -1,0 +1,34 @@
+{
+  "name": "xplex-hq",
+  "version": "0.0.1",
+  "description": "User control panel for managing an xplex instance",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/debloper/xplex.git"
+  },
+  "keywords": [
+    "xplex",
+    "stream",
+    "streaming",
+    "multistream",
+    "multi-stream",
+    "nginx-rtmp",
+    "nginx",
+    "rtmp"
+  ],
+  "author": "Soumya Deb <debloper@gmail.com>",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/debloper/xplex/issues"
+  },
+  "homepage": "https://github.com/debloper/xplex#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "fs-extra": "^7.0.1"
+  }
+}
