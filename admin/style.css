@@ -1,0 +1,22 @@
+h1.display-1 {
+  margin: 5rem auto;
+  font-family: 'Unica One';
+}
+h1.display-1 sup {
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  vertical-align: super;
+  font-family: 'Alegreya Sans';
+}
+
+#ingests .placeholder {
+  margin: 0.5rem;
+}
+#ingests .list-group {
+  width: 100%;
+}
+#ingests .legend {
+  margin: auto 0.5rem;
+}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alegreya+Sans|Unica+One">
+    <link rel="stylesheet" href="style.css">
+
+    <title>HQ</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="heading" class="display-1 text-center">
+        xplex<sup class="text-white bg-danger">HQ</sup>
+      </h1>
+
+      <div id="ingests" class="d-flex flex-column align-items-center justify-content-center">
+        <div class="placeholder spinner-grow spinner-grow-sm" role="status"></div>
+        <div class="placeholder text-muted">Loading ingest settings...</div>
+      </div>
+
+      <div id="add-ingest" class="input-group mt-4">
+          <input type="text" class="form-control" placeholder="Add new ingest URL">
+          <div class="input-group-append">
+            <button class="btn btn-dark" type="button">Add Ingest</button>
+          </div>
+      </div>
+    </div>
+
+    <template id="ingest-list-template">
+      <ul class="list-group">
+          <li class="list-group-item bg-light">
+            <span class="font-weight-bold">xplex Ingests</span>
+            <span class="legend float-right text-muted"><span class="text-success">•</span> current</span>
+            <span class="legend float-right text-muted"><span class="text-secondary">•</span> new</span>
+          </li>
+      </ul>
+    </template>
+
+    <template id="ingest-item-template">
+      <li class="list-group-item text-truncate"></li>
+    </template>
+
+    <template id="ingest-kick-template">
+      <button type="button" class="close" title="Delete Ingest">&times;</button>
+    </template>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
