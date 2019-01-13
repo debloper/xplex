@@ -34,15 +34,20 @@
     <template id="ingest-list-template">
       <ul class="list-group">
           <li class="list-group-item bg-light">
-            <span class="font-weight-bold">xplex Ingests</span>
-            <span class="legend float-right text-muted"><span class="text-success">•</span> current</span>
-            <span class="legend float-right text-muted"><span class="text-secondary">•</span> new</span>
+            <span class="lead font-weight-bold">xplex Ingests</span>
+            <span class="legend text-muted"><span class="text-success">•</span> new</span>
+            <span class="legend text-muted"><span class="text-secondary">•</span> current</span>
+            <button id="commit" type="button" class="btn btn-outline-danger float-right">
+              apply changes
+            </button>
           </li>
       </ul>
     </template>
 
     <template id="ingest-item-template">
-      <li class="list-group-item text-truncate"></li>
+      <li class="list-group-item text-truncate">
+        <span class="ingest-url"></span>
+      </li>
     </template>
 
     <template id="ingest-kick-template">

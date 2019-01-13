@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/debloper/xplex#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1"
   }

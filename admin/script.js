@@ -20,7 +20,12 @@ let xplex = {
     if (!!newIngestURL) {
       $("#ingests .no-ingest").remove()
 
-      $(rawIngestItem).addClass("text-success is-ingest").append(newIngestURL, rawIngestKick)
+      $(rawIngestItem)
+      .addClass("text-success")
+      .append(rawIngestKick)
+      .find(".ingest-url")
+      .html(newIngestURL)
+
       $("#ingests .list-group").append(rawIngestItem)
   
       $("#add-ingest input").val("")
@@ -33,8 +38,14 @@ let xplex = {
 
     $("#ingests .no-ingest").remove()
 
+    $(rawIngestItem).append(rawIngestKick)
+
     for (let d of data) {
-      $(rawIngestItem).addClass("text-secondary is-ingest").html(d).append(rawIngestKick)
+      $(rawIngestItem)
+      .addClass("text-secondary")
+      .find(".ingest-url")
+      .html(d)
+
       rawIngestList.append(rawIngestItem)
     }
 
@@ -52,5 +63,15 @@ $(document).ready(() => {
   })
   $("#ingests").on("click", "button.close", (e) => {
     $(e.target).parent().remove()
+  })
+  $("#ingests").on("click", "#commit", (e) => {
+    let ingests = []
+    $(".ingest-url").each((index, item) => {
+      ingests.push(item.innerText)
+    })
+
+    $.post( "/ingests", {ingests}, () => {
+      xplex.getIngests()
+    })
   })
 })

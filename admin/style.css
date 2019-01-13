@@ -17,6 +17,13 @@ h1.display-1 sup {
 #ingests .list-group {
   width: 100%;
 }
+#ingests .bg-light {
+  line-height: 2.5rem;
+}
 #ingests .legend {
   margin: auto 0.5rem;
+}
+
+#commit {
+  text-transform: uppercase;
 }
