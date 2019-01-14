@@ -81,3 +81,35 @@ EXPOSE 80
 EXPOSE 1935
 
 CMD ./lean.sh
+
+# ============= #
+# STAGE 2: Full #
+# ============= #
+
+FROM node:latest as full
+
+# Installing Nginx, manually (to avoid dependency on make)
+RUN mkdir -p  /usr/local/nginx \
+              /usr/local/nginx/sbin \
+              /usr/local/nginx/conf \
+              /usr/local/nginx/logs
+
+COPY --from=builder /tmp/xplex/nginx/objs/nginx /usr/local/nginx/sbin/nginx
+
+COPY --from=builder /tmp/xplex/nginx/conf/mime.types \
+                    /tmp/xplex/nginx/conf/fastcgi_params \
+                    /tmp/xplex/nginx/conf/fastcgi.conf \
+                    /tmp/xplex/nginx/conf/uwsgi_params \
+                    /tmp/xplex/nginx/conf/scgi_params \
+                    /usr/local/nginx/conf/
+
+COPY --from=builder /tmp/xplex/nginx/html /usr/local/nginx/html
+
+COPY conf/*.conf /usr/local/nginx/conf/
+COPY admin ./
+COPY setup/full.sh ./
+
+EXPOSE 80
+EXPOSE 1935
+
+CMD ./full.sh

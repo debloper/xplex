@@ -51,6 +51,13 @@ let xplex = {
 
     $("#ingests").html("")
     $("#ingests").append(rawIngestList)
+  },
+  notifyFail () {
+    let rawNotifyFail = $("#notify-fail-template").contents().clone()
+    $(".container").append(rawNotifyFail)
+    setTimeout(() => {
+      $(".alert-danger").remove()
+    }, 5000)
   }
 }
 
@@ -70,8 +77,8 @@ $(document).ready(() => {
       ingests.push(item.innerText)
     })
 
-    $.post( "/ingests", {ingests}, () => {
-      xplex.getIngests()
-    })
+    $.post( "/ingests", {ingests})
+    .done(() => xplex.getIngests())
+    .fail(() => xplex.notifyFail())
   })
 })
