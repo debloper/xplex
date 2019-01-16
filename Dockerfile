@@ -1,8 +1,8 @@
-# ============== #
-# STAGE 0: Build #
-# ============== #
+# ============= #
+# STAGE 0: Make #
+# ============= #
 
-FROM debian:stretch-slim as builder
+FROM debian:stretch-slim as make
 
 # Package Information
 LABEL version="0.1.0"
@@ -40,76 +40,133 @@ RUN wget ${SRC_NGINX} && \
 # Extract the source archives
 RUN cat *.tar.gz | tar -izxvf -
 
-# Switch to nginx source path
+# Switch to NGINX source path
 RUN mv nginx-${v_NGINX} nginx
 WORKDIR nginx
 
-# Configure nginx source with modules
-RUN ./configure --with-openssl=../openssl-${vm_OSSL} --with-pcre=../pcre-${vm_PCRE} --with-zlib=../zlib-${vm_ZLIB} --add-module=../nginx-rtmp-module-${vm_RTMP}
+# Configure NGINX source with modules
+RUN ./configure \
+    --with-openssl=../openssl-${vm_OSSL} \
+    --with-pcre=../pcre-${vm_PCRE} \
+    --with-zlib=../zlib-${vm_ZLIB} \
+    --add-module=../nginx-rtmp-module-${vm_RTMP}
 
-# Build and install nginx
+# Build NGINX
 RUN make
 
 
 # ============= #
-# STAGE 1: Lean #
+# STAGE 1: Base #
 # ============= #
 
-FROM debian:stretch-slim as lean
+# Re-initiating base image to avoid the bloats from `make` stage
+FROM debian:stretch-slim as base
 
-# Installing Nginx, manually (to avoid dependency on make)
+# Installing NGINX, manually (to avoid dependency on make)
+# --------------------------------------------------------
+## Creating necessary directory structure, to install files in
 RUN mkdir -p  /usr/local/nginx \
               /usr/local/nginx/sbin \
               /usr/local/nginx/conf \
               /usr/local/nginx/logs
 
-COPY --from=builder /tmp/xplex/nginx/objs/nginx /usr/local/nginx/sbin/nginx
+## Installing NGINX binary
+COPY --from=make /tmp/xplex/nginx/objs/nginx /usr/local/nginx/sbin/nginx
 
-COPY --from=builder /tmp/xplex/nginx/conf/mime.types \
+## Installing common config & supporting files
+COPY --from=make /tmp/xplex/nginx/conf/mime.types \
                     /tmp/xplex/nginx/conf/fastcgi_params \
                     /tmp/xplex/nginx/conf/fastcgi.conf \
                     /tmp/xplex/nginx/conf/uwsgi_params \
                     /tmp/xplex/nginx/conf/scgi_params \
                     /usr/local/nginx/conf/
 
-COPY --from=builder /tmp/xplex/nginx/html /usr/local/nginx/html
-
-COPY conf/*.conf /usr/local/nginx/conf/
-COPY setup/lean.sh ./
-
+# Mapping the default HTTP & RTMP port to be published
 EXPOSE 80
 EXPOSE 1935
 
-CMD ./lean.sh
+## NGINX is now installed, but it has no main config file yet
+## Child images are to put in their own config & start server
+## In follow up 2 stages this image is used as the base image
+
 
 # ============= #
-# STAGE 2: Full #
+# STAGE 2: Lean #
 # ============= #
 
-FROM node:latest as full
+# Using `base` image from stage 1
+FROM base as lean
 
-# Installing Nginx, manually (to avoid dependency on make)
+# Install NGINX default contents
+COPY --from=make /tmp/xplex/nginx/html /usr/local/nginx/html
+
+# Install NGINX default config
+COPY --from=make /tmp/xplex/nginx/conf/nginx.conf /usr/local/nginx/conf/
+
+# Start the server with daemon mode off to prevent halting the container
+CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
+
+
+# ============= #
+# STAGE 3: Lite #
+# ============= #
+
+# Using `base` image from stage 1
+FROM base as lite
+
+# Install NGINX default contents
+COPY --from=make /tmp/xplex/nginx/html /usr/local/nginx/html
+
+# Installing custom xplex config with modular HTTP+RTMP contexts
+COPY conf/lite/*.conf /usr/local/nginx/conf/
+
+# Injecting main executable: set up NGINX config & start servers
+COPY setup/lite.sh ./
+
+# And, voila!
+CMD ./lite.sh
+
+
+# ============= #
+# STAGE 4: Full #
+# ============= #
+
+# We're using NodeJS official image as the base image for `full`
+# node:slim uses very same debian:stretch-slim as the base image
+# So, the NGINX we built in `make` can be used as it's same arch
+FROM node:slim as full
+# i.e. same base crust, with extra toppings, salads & olive oils
+
+# Installing NGINX manually again - as we can't use `base` stage
 RUN mkdir -p  /usr/local/nginx \
               /usr/local/nginx/sbin \
               /usr/local/nginx/conf \
               /usr/local/nginx/logs
 
-COPY --from=builder /tmp/xplex/nginx/objs/nginx /usr/local/nginx/sbin/nginx
+COPY --from=make /tmp/xplex/nginx/objs/nginx /usr/local/nginx/sbin/nginx
 
-COPY --from=builder /tmp/xplex/nginx/conf/mime.types \
+COPY --from=make /tmp/xplex/nginx/conf/mime.types \
                     /tmp/xplex/nginx/conf/fastcgi_params \
                     /tmp/xplex/nginx/conf/fastcgi.conf \
                     /tmp/xplex/nginx/conf/uwsgi_params \
                     /tmp/xplex/nginx/conf/scgi_params \
                     /usr/local/nginx/conf/
 
-COPY --from=builder /tmp/xplex/nginx/html /usr/local/nginx/html
+COPY --from=make /tmp/xplex/nginx/html /usr/local/nginx/html
+# Done installing NGINX (without config), like upto `base` stage
 
-COPY conf/*.conf /usr/local/nginx/conf/
+# Then installing modular xplex configs like in the `lite` stage
+COPY conf/full/*.conf /usr/local/nginx/conf/
+
+# Copying in the xplex HQ app sources
 COPY admin ./
+
+# Injecting main executable: set up NGINX config & start servers
 COPY setup/full.sh ./
 
+# Mapping the default HTTP & RTMP port to be published
 EXPOSE 80
 EXPOSE 1935
 
+# BAM!
 CMD ./full.sh
