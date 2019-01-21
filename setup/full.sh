@@ -16,7 +16,7 @@ fi
 cat ${NGINX_CONFIG}/xplex.conf
 
 # Setup xplex-hq server and proxy it through nginx
-cd admin
+cd app
 npm install
 nohup npm start &
 

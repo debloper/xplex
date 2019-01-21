@@ -159,7 +159,7 @@ COPY --from=make /tmp/xplex/nginx/html /usr/local/nginx/html
 COPY conf/full/*.conf /usr/local/nginx/conf/
 
 # Copying in the xplex HQ app sources
-COPY admin ./
+COPY app ./app
 
 # Injecting main executable: set up NGINX config & start servers
 COPY setup/full.sh ./
