@@ -1,0 +1,8 @@
+title: xplex
+email: debloper@gmail.com
+description: 'xplex: multistreaming for the people'
+baseurl: ''
+markdown: kramdown
+theme: null
+plugins:
+  - jekyll-feed
