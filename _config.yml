@@ -4,5 +4,12 @@ description: 'xplex: multistreaming for the people'
 baseurl: ''
 markdown: kramdown
 theme: null
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year:month:day/:title
+  pages:
+    output: true
+    permalink: /:slug
 plugins:
   - jekyll-feed
