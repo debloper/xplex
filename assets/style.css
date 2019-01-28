@@ -34,17 +34,72 @@ body {
   transform:          translateZ(0);
 }
 a {
+  color:              #001111;
   outline:            0;
   text-decoration:    none;
+  transition:         all 200ms ease;
 }
 
+nav {
+  width:              100%;
+  max-width:          60rem;
+  margin:             2rem auto;
+  text-align:         left;
+  display:            flex;
+}
+nav a {
+  vertical-align:     middle;
+}
+
+footer {
+  margin:             5rem auto 2rem;
+  font-family:        "Alegreya Sans";
+}
+footer code {
+  padding:            0.25rem;
+  margin:             auto 0.25rem;
+  border-radius:      0.25rem;
+  background:         #001111;
+}
+footer code a {
+  color:              #eeeeee;
+}
+
+
 /* 1. ID & Class */
+nav #backhome {
+  flex-grow:          1;
+  font-size:          2rem;
+  font-weight:        bold;
+  font-family:        "Unica One";
+}
+nav .link {
+  margin:             auto 1rem;
+  font-size:          1.5rem;
+  font-family:        "Alegreya Sans";
+}
+
 
 /* 2. Pseudoclass */
+a:hover {
+  color:              #cc3333;
+}
+footer code:hover {
+  background:         #cccccc;
+}
 
 
 /* 3. Media Queries */
-@media screen and (max-width: 960px) {}
+@media screen and (max-width: 960px) {
+  nav #backhome {
+    font-size: 1.5rem;
+    padding-left: 1.5rem;
+  }
+  nav .link {
+    font-size: 1rem;
+    margin: auto 0.5rem;
+  }
+}
 @media screen and (max-width: 640px) {}
 @media screen and (max-height: 480px) {}
 @media screen and (max-height: 240px) {}
