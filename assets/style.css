@@ -27,8 +27,8 @@ body {
   margin:             0;
   padding:            0;
   min-width:          320px;
-  background:         #eeeeee;
-  font-family:        Roboto, sans-serif;
+  background:         #f8f8f8;
+  font-family:        "Alegreya Sans", sans-serif;
   text-align:         center;
   -webkit-transform:  translateZ(0);
   transform:          translateZ(0);
@@ -52,21 +52,44 @@ nav a {
 }
 
 footer {
-  margin:             5rem auto 2rem;
-  font-family:        "Alegreya Sans";
+  margin:             2rem auto;
 }
-footer code {
+
+code {
   padding:            0.25rem;
   margin:             auto 0.25rem;
   border-radius:      0.25rem;
   background:         #001111;
 }
-footer code a {
+code a {
   color:              #eeeeee;
+}
+
+#page {
+  width:              100%;
+  max-width:          60rem;
+  margin:             2rem auto;
+  font-size:          1.25rem;
 }
 
 
 /* 1. ID & Class */
+a.button {
+  margin:             0.5rem 0.25rem;
+  padding:            1rem 2rem;
+  display:            inline-block;
+  border:             solid 1px #001111;
+  border-radius:      0.25rem;
+}
+a.button.primary {
+  color:              #eeeeee;
+  background:         #001111;
+}
+a.button.auxiliary {
+  color:              #001111;
+  background:         #eeeeee;
+}
+
 nav #backhome {
   flex-grow:          1;
   font-size:          2rem;
@@ -76,16 +99,38 @@ nav #backhome {
 nav .link {
   margin:             auto 1rem;
   font-size:          1.5rem;
-  font-family:        "Alegreya Sans";
 }
 
+#page .logo {
+  width:              12rem;
+}
+#page .punchline {
+  font-size:          1.5rem;
+}
+
+#social, #colophon {
+  margin:             4rem auto;
+}
+#social a {
+  margin:             auto 0.5rem;
+}
 
 /* 2. Pseudoclass */
 a:hover {
   color:              #cc3333;
 }
-footer code:hover {
+a.button:hover {
+  color:              #001111;
   background:         #cccccc;
+  border-color:       #cccccc;
+}
+
+code:hover {
+  background:         #cccccc;
+}
+
+#social a:hover {
+  filter:             opacity(0.3);
 }
 
 
@@ -98,6 +143,9 @@ footer code:hover {
   nav .link {
     font-size: 1rem;
     margin: auto 0.5rem;
+  }
+  #page {
+    padding: 2rem;
   }
 }
 @media screen and (max-width: 640px) {}
