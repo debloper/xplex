@@ -33,21 +33,39 @@ body {
   -webkit-transform:  translateZ(0);
   transform:          translateZ(0);
 }
+
+body > * {
+  width:              100%;
+  max-width:          60rem;
+}
+
 a {
-  color:              #001111;
+  color:              #cc3333;
   outline:            0;
   text-decoration:    none;
   transition:         all 200ms ease;
 }
 
+h1 {
+  font-size:          3rem;
+  font-weight:        normal;
+}
+
+h2 {
+  margin-top:         3rem;
+}
+
+h3 {
+  margin-top:         2rem;
+}
+
 nav {
-  width:              100%;
-  max-width:          60rem;
   margin:             2rem auto;
   text-align:         left;
   display:            flex;
 }
 nav a {
+  color:              #001111;
   vertical-align:     middle;
 }
 
@@ -56,8 +74,10 @@ footer {
 }
 
 code {
-  padding:            0.25rem;
-  margin:             auto 0.25rem;
+  color:              #eeeeee;
+  font-size:          1rem;
+  padding:            0.125rem 0.5rem;
+  margin:             auto 0.125rem;
   border-radius:      0.25rem;
   background:         #001111;
 }
@@ -65,15 +85,28 @@ code a {
   color:              #eeeeee;
 }
 
-#page {
-  width:              100%;
-  max-width:          60rem;
-  margin:             2rem auto;
-  font-size:          1.25rem;
+dt {
+  margin-top:         1rem;
+  font-weight:        bold;
+}
+dd {
+  font-size:          1rem;
+  margin-inline-start:0;
 }
 
 
 /* 1. ID & Class */
+#page {
+  margin:             2rem auto;
+  font-size:          1.25rem;
+}
+#page .logo {
+  width:              12rem;
+}
+#page .punchline {
+  font-size:          1.5rem;
+}
+
 a.button {
   margin:             0.5rem 0.25rem;
   padding:            1rem 2rem;
@@ -90,6 +123,11 @@ a.button.auxiliary {
   background:         #eeeeee;
 }
 
+.mute {
+  color:              #446666;
+  font-size:          1rem;
+}
+
 nav #backhome {
   flex-grow:          1;
   font-size:          2rem;
@@ -101,13 +139,21 @@ nav .link {
   font-size:          1.5rem;
 }
 
-#page .logo {
-  width:              12rem;
+#toc {
+  margin:             3rem auto;
+  display:            flex;
+  flex-direction:     column;
+  align-items:        center;
+  text-align:         start;
 }
-#page .punchline {
-  font-size:          1.5rem;
+#toc h4 {
+  margin:             0 auto;
 }
 
+footer code {
+  margin:             auto 0.25rem;
+  padding:            0.5rem;
+}
 #social, #colophon {
   margin:             4rem auto;
 }
@@ -125,7 +171,7 @@ a.button:hover {
   border-color:       #cccccc;
 }
 
-code:hover {
+footer code:hover {
   background:         #cccccc;
 }
 
@@ -136,16 +182,16 @@ code:hover {
 
 /* 3. Media Queries */
 @media screen and (max-width: 960px) {
+  body > * {
+    padding: 0 2rem;
+  }
   nav #backhome {
     font-size: 1.5rem;
-    padding-left: 1.5rem;
+    padding-left: 1rem;
   }
   nav .link {
     font-size: 1rem;
     margin: auto 0.5rem;
-  }
-  #page {
-    padding: 2rem;
   }
 }
 @media screen and (max-width: 640px) {}

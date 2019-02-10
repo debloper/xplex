@@ -1,0 +1,101 @@
+---
+title: xplex &mdash; FAQ
+layout: page
+---
+
+<h1>Frequently Asked Questions</h1>
+
+<h2>What is xplex?</h2>
+<p>
+  xplex is a lean, NGINX based rtmp & web server in a Docker container, with which you can livestream to multiple streaming platforms (like Twitch, YouTube, Mixer etc.) simultaneously. The best part is... with xplex you can host your own multistreaming server, on your favorite hosting service (spending only as much as you want to), with your favorite streaming software, without losing any performance/FPS, and have complete control of your own data.
+</p>
+
+<h2>Why is xplex?</h2>
+<p>
+  Streamers are held hostage by the streaming services to only stream to one platform at any given time. It's really inconvenient & expensive to stream to multiple platforms at the same time with a personal computer without taxing its performance, so streamers just put up with it &mdash; not realizing that it doesn't have to be that way. As a content-creator, _you_ should be in the driver's seat, and _you_ should have the first decision of which all places to publish your contents to.
+</p>
+<p>
+  This strangled feeling of being bound to a streaming platform was unacceptable for me, and I started looking for solutions to solve (at least) the technical limitations there were.
+</p>
+<p>
+  When I found the solution for myself &mdash; that I was happy with, cause it wasn't a weird/shady hack but a quite elegant & most cost-effective solution than any possible alternatives &mdash; I figured it might be a good idea to make it available for others to use (even if that "others" is a completely imaginary number, and the only real user is just me). Hence xplex.
+</p>
+
+<h2>Why me, as a streamer, have to host it?</h2>
+<p>
+  Alternatively, "why aren't you offering this as a service that I can subscribe to?" or, "Why should _I_ need to go through the pain of managing a multistreaming server?" etc.
+</p>
+<p>
+  Well, initially xplex was planned to be a freemium service. It was free for multistreaming, with paid components, such as co-stream: stream multiple perspectives as a  group of streamers, with easy side-by-side or switch-to-from experience for the viewers, or x-stream: better ways to communicate with viewers than scrolling mess of text-chat, more media controls for the viewers, AR/VR experience; as well as plugin supports, auth and webhooks API etc. This was a lot of work, especially when you add the load-balancing, geo-availability, security etc. which are essential for a non-personal (public) service of decent kind.
+</p>
+<p>
+   So, we went ahead and built it (circa 2015-16).
+</p>
+<p>
+  But, like any bandwidth-heavy media service, albeit this one being the most cost-effective one, it'd still cost quite a bit of money to manage the whole operation from our own pocket. So we needed funding.
+</p>
+<p>
+  The problem is, maybe for the lack of the kind of Venture Capitalists who understand this ecosystem, or the lack of competition/data to back up the feasibility of this new market, or maybe because of our complete ineptitude of marketing-skills (read: not enough "AI", "blockchain" or other enticing jargons in the pitch to take the cake), or a combination of all of them, we couldn't raise the capital we needed to offer xplex as a hosted service.
+</p>
+<p>
+  The other two people in the team of 3 who worked hard to see it through eventually got busy with other challenges in life. But, I couldn't just let it go.
+</p>
+<p>
+  So, the only reasonable way to make xplex available for public seemed to be where each individual streamer disburse their own expenses (which is not much, for personal use), and being able to self-host xplex as microservice was a homage to its technically lean and simple architecture. Hence, with other contributors' permission, I rewrote the personal/self-hosted xplex stack end-to-end as a free and opensource software.
+</p>
+<p>
+  <b>So, in short &mdash; there was no other/better way known to me that allowed showing xplex the light of the outside world apart from making it a self-hosted microservice.</b> If you happen to have a better idea, I'm genuinely interested.
+</p>
+
+<h2>What's the system requirement for running xplex?</h2>
+<p>
+  The resource utilization is so meagre, that it's impractical to put that in numbers. I've run xplex on a Raspberry Pi, with 10 incoming streams (consider 10 cuncurrent users multistreaming) splitting into 3 streams each (so, 40 streams in total) and it works like charm! So, as long as the system can run a modern Linux distro, it can run xplex.
+</p>
+<p>
+  The only bottleneck there is, the network bandwidth. The bandwidth requirement is linearly proportional to the number of streams.
+</p>
+
+<h2>What's the bandwidth requirement?</h2>
+<p>
+  As mentioned, the bandwidth requirement is linear and very predictable, given the number of streams. It's as simple as: <code>streamBitrate * (n + 1)</code> where <code>n</code> is the number of streaming platforms you're multistreaming to.
+</p>
+<p>
+  Consider the scenario: you're multistreaming a 1080p stream at 5000kbps to Twitch, YouTube and Mixer (so, <code>n = 3</code>). The minimum bandwidth you'll need to do so is: <code>5000kbps * (3+1) = 20000kbps ≈ 20mbps</code>. But it's better to have approx double the bandwidth as a safety measure to avoid bottlenecks (i.e. 40mbps, in this case).
+</p>
+<p class="mute">Please note, this requirement is for the xplex host, i.e. the cloud server. Your streaming computer doesn't need this much bandwidth. You'll be quite fine with even a 10mbps network to send your local stream to xplex server &mdash; same as streaming to a single streaming platform.</p>
+
+<h2>How much data does xplex use in a given time?</h2>
+<p>
+  On the streaming computer, you're not using any more or less data to send your stream to xplex server. It's same amount of data if you directly streamed to a single streaming platform.
+</p>
+<p>
+  On xplex server, the hourly data usage would be: <code>( streamBitrate / 8 / 1024 / 1024 ) * 3600 * (n + 1)</code> in GB (if <code>streamBitrate</code> is in kbps, and again, <code>n</code> here is the number of outgoing streaming services). To simplify this, here are some approximate figures for hourly data usage for different stream qualities:
+
+  <dl>
+    <dt>1080p @ 5000kbps</dt>
+    <dd>2GB incoming data, (2*n)GB outgoing data per hour</dd>
+    <dt>720p @ 2500kbps</dt>
+    <dd>1GB incoming data, (1*n)GB outgoing data per hour</dd>
+    <dt>480p @ 1000kbps</dt>
+    <dd>400MB incoming data, (400*n)MB outgoing data per hour</dd>
+  </dl>
+</p>
+
+<h2>Can many people simultaneously use a single xplex server?</h2>
+<p>
+  With some tinkering inside the server, yes. But right out of the box (at this point in time), no.
+</p>
+<p>
+  In future, xplex<sup>hq</sup> is planned to get a profile feature update, where a bunch of friends can run a common xplex server and each of them can individually & simultaneously multistream (and share the server cost among themselves).
+</p>
+
+<h2>Can I host xplex and offer it as a paid service?</h2>
+<p>
+  xplex is licensed under MPL-2.0, so you can not redistribute a modified version of xplex while calling it xplex (you have to rebrand your fork for redistribution).
+</p>
+<p>
+  But if you just want to build on top of this stack, or take the core inspirations from this and make a full-fledged service from scratch, and offer it as a paid service & become a millionaire/billionaire &mdash; well, be my guest, and my best wishes are with you. Rest assured, I'm not going to sue you.
+</p>
+<p>
+  I'd really appreciate if you gave credits, however, or maybe grab a drink to tell me your success story (not sure who pays for the drink, but we'll figure it out).
+</p>

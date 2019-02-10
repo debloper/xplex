@@ -1,0 +1,96 @@
+---
+title: xplex &mdash; Guide
+layout: page
+---
+
+<h1>xplex setup guide</h1>
+<p>Setting up multistreaming with xplex is actually <b>easier than setting up a streaming software</b> (like OBS, XSplit etc.). Just follow along the steps, and you'll be up and live in no time!</p>
+
+<div id="toc">
+  <h4>Table of Contents</h4>
+  <ol>
+    <li>
+      <a href="#guide-to-get-started">getting started</a>
+      <ul>
+        <li><a href="#guide-to-deps-host">cloud host</a></li>
+        <li><a href="#guide-to-deps-terminal">remote terminal</a></li>
+        <li><a href="#guide-to-deps-services">streaming accounts</a></li>
+        <li><a href="#guide-to-deps-software">streaming software</a></li>
+      </ul>
+    </li>
+    <li><a href="#guide-to-prepare-host">preparing host</a></li>
+    <li><a href="#guide-to-deploy-xplex">deploying xplex</a></li>
+    <li><a href="#guide-to-add-streams">adding streams</a></li>
+    <li><a href="#guide-to-updat-ingest">updating ingest</a></li>
+  </ol>
+</div>
+
+<h2 id="guide-to-get-started">1. getting started</h2>
+<p>
+  In order to get started, you need to keep your prerequisites in check:
+
+  <h3 id="guide-to-deps-host">Cloud Host</h3>
+  <p>A cloud infrastructure to run the xplex service container for you. Can be any host of your choice, <b>as long as they can run a linux distro with a docker container within it, has enough bandwidth to split your stream, and can have the HTTP & RTMP ports opened</b>. AWS, GCP, Azure, DigitalOcean, Linode, Vultr etc. to name a few popular services that you can use for this.</p>
+  
+  <p class="mute">I personally use DigitalOcean to setup my own xplex instance. If you use <a href="https://m.do.co/c/97a76c3ca7ad" target="_blank">this link to sign up to DigitalOcean</a>, you get $100 credit & once you spend $25, I'll get $25 as referral bonus (with $100 starting credit, you can stream for roughly 20 months for free). You don't have to do this, but I'll highly appreciate the support if you do.</p>
+
+  <h3 id="guide-to-deps-terminal">Remote Terminal</h3>
+  <p>You will need an SSH client to access the VM in the cloud. It's a small command-line software, usually available out-of-the-box in all Linux & Mac OS' terminal emulators. But on Windows, you'll have to get one (as Windows command prompt is Pepega). <b>I recommend using <a href="https://www.putty.org/" target="_blank">PuTTY</a> for this purpose</b>, as it's widely popular & trusted SSH client for Windows systems.</p>
+
+  <h3 id="guide-to-deps-services">Streaming Accounts</h3>
+  <p>May it be Twitch, YouTube, Mixer, some of them, all of them, some other service(s), or a custom streaming server &mdash; <b>as long as they can take streaming ingest of regular encoding settings over RTMP</b> &mdash; you're good. So, go ahead and get your accounts registered on the services you prefer (and keep the ingest URLs with stream-keys handy).</p>
+
+  <h3 id="guide-to-deps-software">Streaming Software</h3>
+  <p>If you've streamed before, you probably already have a streaming software set up; if you haven't then you'll need one. The software can be anything, like OBS, XSplit or the likes, <b>as long as it can take a custom ingest server as streaming URL</b>.</p>
+
+</p>
+
+<h2 id="guide-to-prepare-host">2. preparing host</h2>
+<p>
+  Now that you have all the prerequisites in check, it's time to dive into the real task. First you need to create a host where you can deploy the xplex container &mdash; which is essentially a small linux system running on the cloud of the infrastructure provider of your choosing.
+</p>
+<p>
+  Create a small VM (1 CPU Core, 1GB RAM, 1GB Storage are more than enough) & choose an image with Docker set up in it.
+</p>
+<p class="mute">
+  Vendors name their computation units differently (nodes, gears, compute cloud etc.). So, please don't be confused &mdash; effectively they're all just virtual machines (VMs). Like, in DigitalOcean, they're called droplets.
+</p>
+<p class="mute">
+  I'll add service-specific detailed guide to preparing host in this section very soon. Stay tuned!
+</p>
+
+<h2 id="guide-to-deploy-xplex">3. deploying xplex</h2>
+<p>
+  Note down the IP address of the VM. Login over SSH (Secure SHell) as root into that IP (with PuTTY on Windows).
+</p>
+<p>
+  Now (just to be sure) check if Docker service is up and running, with <code>docker version</code> (you may need to start Docker server, if it wasn't already running, with <code>systemctl start docker</code>). Once you're sure that Docker v18+ is up and running, you can start the xplex container with <code>nohup docker run --name xplex -p 80:80 -p 1935:1935 xplex/full &</code> (<b>note:</b> don't forget the <code>&</code> at the end of the command).
+</p>
+<p class="mute">
+  Hopefully everything went well, and you're now ready for the next step. But, there are eleventy-billion ways this can go wrong (considering how many moving parts and abstractions are in play here), but usually it doesn't. I'll try my best to document the common causes of failures &mdash; so if you've faced issues, please let me know so I can update the guide &mdash; it'll help others as well!
+</p>
+
+<h2 id="guide-to-add-streams">4. adding streams</h2>
+<p>
+  Open your web-browser and go to <code>http://&lt;your-vm-IP&gt;/</code> and you should see the xplex<sup>hq</sup> landing page. This is a small web-app to help you manage your xplex instance.
+</p>
+<p>
+  Visit your streaming services' dashboard(s) and collect the streaming server & stream-keys, then put them in the "Add new ingest URL" field in xplex<sup>hq</sup>. Once you're done adding all the outgoing ingests, click "Apply Changes" to make the change permanent in the xplex server, and reload this new configuration.
+</p>
+<p>
+  <b>Note:</b> if your streaming server is <code><span style="color: #d00;">rtmp://zone.service.tld/path</span></code> & your stream-key is <code><span style="color: #3c3;">abc-xyz-1234</span></code>, then your ingest URL would be <code><span style="color: #d00;">rtmp://zone.service.tld/path</span>/<span style="color: #3c3;">abc-xyz-1234</span></code>.
+</p>
+<p>
+  Your xplex server is now ready to multistream &mdash; all you need is to send an audio-video stream to its way with a streaming software. Let's get to that!
+</p>
+
+<h2 id="guide-to-update-ingests">5. updating ingest</h2>
+<p>
+  Whichever streaming software you're using, xplex doesn't really care about all that. All you need is to tell the streaming software to send the stream to your xplex server (instead of whichever service you were sending it to before).
+</p>
+<p>
+  To do that, change the streaming URL to <code>rtmp://&lt;your-vm-IP&gt;:1935/live</code> (there's no stream-key requirement, so put whatever, or leave it blank) in the streaming software settings. And done!
+</p>
+<p>
+  Now, when you'll start streaming, all the services you've added ingests to (in the xplex<sup>hq</sup>) will receive your stream. Visit your channels to verify that you're live... Happy streaming!
+</p>
