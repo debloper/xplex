@@ -2,10 +2,9 @@
 # STAGE 0: Make #
 # ============= #
 
-FROM debian:stretch-slim as make
+FROM debian:bookworm-slim AS make
 
 # Package Information
-LABEL version="0.1.0"
 LABEL container="xplex"
 LABEL maintainer="Soumya Deb <debloper@gmail.com>"
 
@@ -13,15 +12,15 @@ LABEL maintainer="Soumya Deb <debloper@gmail.com>"
 ENV v_NGINX=1.15.8
 ENV vm_OSSL=1.1.1a
 ENV vm_PCRE=8.42
-ENV vm_RTMP=1.2.1
+ENV vm_RTMP=1.2.2
 ENV vm_ZLIB=1.2.11
 
 # Source packages to be built
 ENV SRC_NGINX=https://nginx.org/download/nginx-${v_NGINX}.tar.gz
 ENV MODULE_SRC_OSSL=https://www.openssl.org/source/openssl-${vm_OSSL}.tar.gz
-ENV MODULE_SRC_PCRE=https://ftp.pcre.org/pub/pcre/pcre-${vm_PCRE}.tar.gz
+ENV MODULE_SRC_PCRE=https://sourceforge.net/projects/pcre/files/pcre/${vm_PCRE}/pcre-${vm_PCRE}.tar.gz
 ENV MODULE_SRC_RTMP=https://github.com/arut/nginx-rtmp-module/archive/v${vm_RTMP}.tar.gz
-ENV MODULE_SRC_ZLIB=http://zlib.net/zlib-${vm_ZLIB}.tar.gz
+ENV MODULE_SRC_ZLIB=https://zlib.net/fossils/zlib-${vm_ZLIB}.tar.gz
 
 # Update the environment
 RUN apt-get update && \
@@ -60,7 +59,7 @@ RUN make
 # ============= #
 
 # Re-initiating base image to avoid the bloats from `make` stage
-FROM debian:stretch-slim as base
+FROM debian:bookworm-slim AS base
 
 # Installing NGINX, manually (to avoid dependency on make)
 # --------------------------------------------------------
@@ -95,7 +94,7 @@ EXPOSE 1935
 # ============= #
 
 # Using `base` image from stage 1
-FROM base as lean
+FROM base AS lean
 
 # Install NGINX default contents
 COPY --from=make /tmp/xplex/nginx/html /usr/local/nginx/html
@@ -112,7 +111,7 @@ CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
 # ============= #
 
 # Using `base` image from stage 1
-FROM base as lite
+FROM base AS lite
 
 # Install NGINX default contents
 COPY --from=make /tmp/xplex/nginx/html /usr/local/nginx/html
@@ -134,7 +133,7 @@ CMD ./lite.sh
 # We're using NodeJS official image as the base image for `full`
 # node:slim uses very same debian:stretch-slim as the base image
 # So, the NGINX we built in `make` can be used as it's same arch
-FROM node:slim as full
+FROM node:slim AS full
 # i.e. same base crust, with extra toppings, salads & olive oils
 
 # Installing NGINX manually again - as we can't use `base` stage
