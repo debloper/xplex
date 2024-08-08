@@ -1,16 +1,16 @@
 # xplex
-## Multistreaming for the people
+## the renaissance will not be televised
+## IT WILL BE STREAMED LIVE!
 
 `xplex` is:
 
 - free and open source
-- self-hosted (_YOU_ run/use/own it)
+- containerized & self-hosted
 - performance & resource efficient
 - multi-streaming service
-- in a box (docker container, i.e.)
 
-
-**NOTE:** This `readme` is meant for developers, trying to look under the hood of the technology stack. If you're a streamer, looking for certain information about getting `xplex` to work - the website should be where you find it. If you can't find what you're looking for in the website, it's a problem - so, please let us know, and we'll fix it.
+> [!NOTE]  
+> This `readme` is meant for developers, trying to look under the hood of the technology stack. If you're a streamer, looking for certain information about getting `xplex` to work - the [website](https://xplex.me) should be where you find it.
 
 ### Abstract
 We're using [nginx-rtmp-module](https://github.com/arut/nginx-rtmp-module) to build & deploy a custom `NGINX` server instance, which uses multiple `push` directives inside `rtmp::server::application` configuration context, to split the incoming stream into `n-number` of identical streams (without any transcoding) to all the `push` ingests.
@@ -39,19 +39,17 @@ cd xplex
 At this point, if `docker` service is up, then try running:
 
 ```bash
-./build.sh lite
-# convenience script for `docker build --target lite -t xplex/lite:latest .`
+./build.sh xplex
+# convenience script for `docker build --target xplex -t xplex/xplex:latest .`
 ```
 
-If everything went alright, you should have a new image created called `xplex/lite:latest` which you can now run with:
+If everything went alright, you should have a new image created called `xplex/xplex:latest` which you can now run with:
 
 ```bash
-docker run -it -p 80:80 -p 1935:1935 xplex/lite
+docker run -it -p 80:80 -p 1935:1935 xplex/xplex
 ```
 
-Open your browser, and visit [localhost](http://localhost) - you should see the `NGINX` default welcome page, which (somewhat) ensures that things are pretty smooth so far.
-
----
+Open your browser, and visit [http://localhost/](http://localhost/) - you should see the `xplex HQ` dashboard. This is where you would add your streaming ingests for xplex to push streams to.
 
 Now, **to confirm if the RTMP streaming is working**, you'd need:
 
@@ -66,40 +64,26 @@ Now, **to confirm if the RTMP streaming is working**, you'd need:
     - [YouTube](https://support.google.com/youtube/answer/2853702)
     - [Mixer](https://watchbeam.zendesk.com/hc/articles/217386946)
 
-Then in the terminal, run:
+Add the streaming ingest endpoints to xplex HQ dashboard & make sure to `APPLY CHANGES` before streaming.
 
-```bash
-docker run -it -e "INGESTS=url1 url2" -p 80:80 -p 1935:1935 xplex/lite
-
-# URLs are the ingest points to the streaming services
-# e.g. rtmp://a.rtmp.youtube.com/live2/1234-5678-1357-2468
-# or, rtmp://live-abc.twitch.tv/app/live_12345678_xxxxxxxx
-# make sure they're space separated, to be properly parsed
-```
-
-Alternatively, use/verify the `xplex/full` image by running:
-
-```bash
-docker run -it -p 80:80 -p 1935:1935 xplex/full
-
-# This will also start a NodeJS app server inside the container
-# Open `http://localhost` in your browser to set stream ingests
-# "Apply Changes" to restart NGINX with these new configuration
-```
-
-Once the container started, start the stream from OBS, and you should be able to visit your channel(s) to watch it live.
+If everything went OK so far, then start the stream from OBS, and you should be able to visit your channel(s) to watch it live.
 
 ### Contribute
-Whether it's a suggestion, feature request or a patch itself, contributions to `xplex` are highly appreciated. A software can never be a very good one when it's just one lone-wolf's pipe dream; please gather around and make it better together.
+Whether it's a suggestion, feature request or a patch itself, contributions to `xplex` are highly appreciated. A software can never be a very good one when it's just a lone-wolf's pipe dream; please gather around and make it better together.
+
+Use the 3Es for prioritization & decision making; which says the solution has to aspire to be:
+
+1. effective
+2. efficient
+3. elegant
+
+...and in that order.
 
 There's no restrictive & pedantic contributing guideline(s), however:
 
-- don't break conventions
 - assume good faith
 - be considerate
 - be concise
-
-Pull Requests are most preferred & most valued form of contributions, Issues are second by far. Tweets, reddit threads etc. come a long way after.
 
 By contributing to `xplex` with code-examples/pull-requests, you agree to have those codes published as permissive open source software, as detailed in the next section.
 

@@ -56,7 +56,6 @@ RUN make install
 # ============== #
 # STAGE 1: nginx #
 # ============== #
-
 FROM debian:bookworm-slim AS nginx
 
 ## Transplant nginx
@@ -69,20 +68,21 @@ CMD ["/usr/local/nginx/sbin/nginx", "-g", "daemon off;"]
 # ============== #
 # STAGE 2: xplex #
 # ============== #
-
 FROM node:slim AS xplex
 
-## Transplant nginx
+## Transplant nginx & install custom configs for xplex
 COPY --from=build /usr/local/nginx /usr/local/nginx
+COPY conf/*.conf /usr/local/nginx/conf/
 
-# Install custom modular nginx configs for xplex
-COPY conf/full/*.conf /usr/local/nginx/conf/
+WORKDIR /xplex
 
-# Install xplex HQ app sources
-COPY app ./app
+# Install packages & start xplex HQ
+COPY app/package.json ./
+RUN npm i
+COPY app ./
 
 # Inject the application script
-COPY setup/full.sh ./
+COPY xplex.sh ./
 
 # BAM!
-CMD ["./full.sh"]
+CMD ["./xplex.sh"]

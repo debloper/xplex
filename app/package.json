@@ -1,7 +1,7 @@
 {
   "name": "xplex-hq",
-  "version": "0.1.0",
-  "description": "User control panel for managing an xplex instance",
+  "version": "1.0.0",
+  "description": "GUI dashboard for managing an xplex instance",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
