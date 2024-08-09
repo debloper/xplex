@@ -1,0 +1,16 @@
+<svg id="xplex" version="1.1"
+    width="256" height="256" viewBox="0 0 64 64"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:svgjs="http://svgjs.com/svgjs">
+  <polyline
+      id="copies" fill="#909" stroke="#909"
+      stroke-width="4" stroke-linecap="round" stroke-linejoin="round"
+      points="2,2 16,2 30,16 30,31 33,34 48,34 62,48 62,62 48,62 32,46 16,62 2,62 2,48 18,32 2,16 2,2">
+  </polyline>
+  <polyline
+      id="source" fill="#ddd" stroke="#ddd"
+      stroke-width="4" stroke-linecap="round" stroke-linejoin="round"
+      points="62,2 62,16 48,30 34,30 34,16 48,2 62,2">
+  </polyline>
+</svg>
