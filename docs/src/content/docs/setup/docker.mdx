@@ -1,0 +1,38 @@
+---
+title: Run as a Docker Container
+description: A comprehensive guide on how to setup xplex with Docker containers.
+---
+import Xplex from '@components/Xplex.astro';
+import { LinkCard, Steps } from '@astrojs/starlight/components';
+
+:::note[Prerequisites' Checklist]
+In order to run <Xplex /> as a Docker container, first you need to ensure:
+- [ ] You have root access on the system.
+- [ ] You have [Docker installed](https://docs.docker.com/get-docker/) on your system.
+- [ ] There's no existing **nginx** service running on the system.
+- [ ] Port `80 (HTTP)` and `1935 (RTMP)` are available & not blocked by firewall.
+
+Once you've verified all of the above, you're good to go!
+:::
+
+<Steps>
+
+1. **Run the xplex container**
+
+   ```bash
+   docker run -d --name xplex -p 80:80 -p 1935:1935 xplex/xplex
+   ```
+
+2. **Mark it DONE on your TODO list**
+
+   No, really... That's it! You're done.
+
+   You can now access your <Xplex isHQ="true" /> dashboard at `http://<hostname-or-IP>/`
+
+</Steps>
+
+<LinkCard
+  title="Jump to the usage section"
+  description="Learn how to use <b>xplex</b><sup>HQ</sup> to configure <b>xplex</b> with multi-streaming ingest endpoints."
+  href="/usage"
+/>

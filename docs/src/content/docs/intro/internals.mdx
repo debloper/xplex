@@ -1,0 +1,15 @@
+---
+title: Technical Overview
+description: The explanation of xplex's technical implementation.
+---
+import Xplex from '@components/Xplex.astro';
+
+## How does it work?
+
+At its core, <Xplex /> is an [rtmp-enabled](https://github.com/arut/nginx-rtmp-module) [nginx server](http://nginx.org/) that splits & pushes incoming RTMP streams to one or more pre-configured RTMP endpoints.
+
+It also provides a simple web-based dashboard with REST API &mdash; called <Xplex isHQ="true" /> &mdash; to conveniently manage the ingest URLs.
+
+:::danger[Stub Alert]
+This article needs more love. Please check back later.
+:::

@@ -10,12 +10,38 @@ export default defineConfig({
       logo: {
         src: './public/favicon.svg',
       },
+      tableOfContents: false,
       customCss: [
         './src/styles/custom.css',
       ],
       social: {
         github: 'https://github.com/debloper/xplex',
-      }
+      },
+      sidebar: [
+        {
+          label: 'Introduction',
+          items: [
+            'intro/index',
+            'intro/internals',
+          ],
+        },
+        {
+          label: 'Installation',
+          items: [
+            'setup/index',
+            'setup/docker',
+            'setup/native',
+          ],
+        },
+        {
+          label: 'Invocation',
+          items: [
+            'usage/index',
+            'usage/ingests',
+            'usage/streaming',
+          ],
+        },
+      ],
     }),
   ],
   markdown: {

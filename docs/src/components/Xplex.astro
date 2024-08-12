@@ -1,0 +1,11 @@
+---
+const {
+  content = 'xplex',
+  color = '#b0b',
+  isHQ = false
+} = Astro.props;
+
+const HQ = isHQ ? "HQ" : "";
+---
+
+<b style=`color: ${color};`>{ content || 'xplex' }<sup>{ HQ }</sup></b>

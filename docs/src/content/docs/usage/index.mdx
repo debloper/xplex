@@ -1,0 +1,27 @@
+---
+title: Using xplex
+description: A comprehensive guide on how to use xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { LinkCard } from '@astrojs/starlight/components';
+
+Regardless of the installation mechanism you went with, once you're done with the setup, you should be able to verify its success by accessing the `http://<hostname-or-IP>/` URL from your browser.
+
+:::danger[Note]
+If you're unable to access the <Xplex isHQ="true" /> dashboard, please check the [setup guide](/setup) if you've missed anything, or [file an issue](https://github.com/debloper/xplex/issues/new) for help.
+:::
+
+If you can see the <Xplex isHQ="true" /> dashboard - it means that the internal components of <Xplex /> are working correctly - you're now all set to configure your ingest endpoints.
+
+Just follow the next steps to go live with multi-streaming.
+
+<LinkCard
+  title="Set up Ingest Endpoints"
+  description="Configure <b>xplex</b> to use the multiple streaming service endpoints."
+  href="/usage/ingests"
+/>
+<LinkCard
+  title="Set up Streaming Software"
+  description="Configure your streaming software to stream to <b>xplex</b>'s endpoint."
+  href="/usage/streaming"
+/>

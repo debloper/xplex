@@ -1,0 +1,23 @@
+---
+title: Setting up xplex
+description: A comprehensive guide on how many ways to setup xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { LinkCard } from '@astrojs/starlight/components';
+
+Setting up multi-streaming with <Xplex /> is simpler than configuring a streaming software like OBS or XSplit—even when using the [fully manual setup](/setup/native) mode.
+
+However, for most users, we recommend deploying <Xplex /> using [Docker containers](/setup/docker). This method is not only easier but also far more effective, efficient & elegant. If you don't need to customize or rebuild <Xplex />'s internal components (i.e. most of you), then this is the fastest way to get started.
+
+Just follow along the steps, and you'll be up and live in no time!
+
+<LinkCard
+  title="Run as a Docker Container"
+  description="The easiest way to get started with <b>xplex</b> (if you have Docker installed)."
+  href="/setup/docker"
+/>
+<LinkCard
+  title="Build and Deploy Manually"
+  description="For those who want complete control & full flexibility to setup <b>xplex</b>."
+  href="/setup/native"
+/>
