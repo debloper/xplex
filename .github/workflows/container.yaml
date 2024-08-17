@@ -2,13 +2,15 @@ name: Publish Docker Container
 
 on:
   push:
+    tags: [ 'v*' ]
     branches: [ "master" ]
-    tags: [ 'v*.*.*' ]
+  workflow_dispatch:
 
 env:
-  IMAGE_NAME: ${{ github.repository }}
-  # PLATFORMS: ["linux/amd64", "linux/arm64"]
-  REGISTRY: ghcr.io
+  IMAGE_DHUB: ${{ vars.IMAGE_DHUB }}
+  IMAGE_GHCR: ${{ github.repository }}
+  REGISTRY_DHUB: docker.io
+  REGISTRY_GHCR: ghcr.io
   TARGET: xplex
 
 jobs:
@@ -29,17 +31,29 @@ jobs:
           cosign-release: 'v2.2.4'
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.0.0
-      - name: Log into registry ${{ env.REGISTRY }}
+      - name: Log into registry ${{ env.REGISTRY_DHUB }}
         uses: docker/login-action@v3.0.0
         with:
-          registry: ${{ env.REGISTRY }}
+          registry: ${{ env.REGISTRY_DHUB }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.RW_DOCKERHUB }}
+      - name: Log into registry ${{ env.REGISTRY_GHCR }}
+        uses: docker/login-action@v3.0.0
+        with:
+          registry: ${{ env.REGISTRY_GHCR }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5.0.0
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            ${{ env.REGISTRY_DHUB }}/${{ env.IMAGE_DHUB }}
+            ${{ env.REGISTRY_GHCR }}/${{ env.IMAGE_GHCR }}
+          tags: |
+            type=sha,enable=true,format=short
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v5.0.0
