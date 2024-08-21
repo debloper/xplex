@@ -4,4 +4,4 @@
 nohup npm start &
 
 # Start nginx (daemon mode off)
-/usr/local/nginx/sbin/nginx
+/usr/local/nginx/sbin/nginx -g 'daemon off;'
