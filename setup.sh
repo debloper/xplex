@@ -1,8 +1,5 @@
 #!/bin/bash
-
-# install dependencies
-apt-get update
-apt-get install -y gcc g++ perl-modules make wget
+export WORKDIR=$(pwd)
 
 # create a temporary working directory
 mkdir -p /tmp/xplex
@@ -38,20 +35,16 @@ make
 make install
 
 # update nginx configuration to use xplex
-cp conf/*.conf /usr/local/nginx/conf/
+cp ${WORKDIR}/conf/*.conf /usr/local/nginx/conf/
 
-# install nodejs
-curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-apt install -y nodejs
-
-# install xplex
+# install xplex-hq
 mkdir -p /opt/xplex/
-cp -r app/* /opt/xplex/
+cp -r ${WORKDIR}/app/* /opt/xplex/
 cd /opt/xplex/
 npm install
 
-# start xplex
+# start xplex-hq
 nohup npm start &
 
-# start nginx
+# start nginx with rtmp
 /usr/local/nginx/sbin/nginx
