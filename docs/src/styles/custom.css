@@ -28,6 +28,26 @@
   --sl-color-black: #ffffff;
 }
 /* Custom styles for specific elements */
+#elevator-pitch h3 {
+  margin: 2rem auto;
+  color: var(--sl-color-gray-3);
+}
 #acknowledgement a {
   text-decoration: none;
+}
+.hero h1#_top {
+  text-transform: uppercase;
+  font-weight: 300;
+  color: var(--sl-color-gray-4);
+}
+.hero .tagline {
+  font-size: 2rem;
+  color: var(--sl-color-gray-2);
+}
+.card-grid {
+  gap: clamp(1rem, 1vw, 1.5rem);
+}
+.card {
+  padding: clamp(1rem, 1vw, 1.5rem);
+  border-radius: 0.5rem;
 }

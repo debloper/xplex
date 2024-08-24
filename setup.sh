@@ -48,3 +48,8 @@ nohup npm start &
 
 # start nginx with rtmp
 /usr/local/nginx/sbin/nginx
+
+# cleanup & exit
+rm -rf /tmp/xplex
+echo -e "\033[0;32mCongrats... xplex is now installed! \033[0m"
+exit 0

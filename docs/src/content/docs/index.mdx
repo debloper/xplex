@@ -5,23 +5,27 @@ template: splash
 # banner:
 #   content: We just launched something cool! <a href="https://example.com">Check it out</a>
 hero:
-  title: The renaissance will be streamed LIVE!
-  tagline: Try <b style="color:#b0b;">xplex</b>... your personal, open source, multi-streaming platform.
+  title: The renaissance will not be televised
+  tagline: But it <b>will</b> be streamed LIVE&mdash;with <b style="color:#b0b;">xplex</b>
   image:
     file: ../../../public/favicon.svg
     alt: xplex logo
   actions:
     - text: Setup xplex
-      link: /setup/
-      icon: right-arrow
+      link: /setup
+      icon: rocket
       variant: primary
-    - text: Fork repo
-      link: https://github.com/debloper/xplex
-      icon: external
+    - text: Learn more
+      link: /intro
+      icon: right-arrow
+      variant: secondary
     - text: Sponsor project
       link: https://github.com/sponsors/debloper
       icon: external
 ---
+import Xplex from '@components/Xplex.astro';
+
+<center id="elevator-pitch"><h3><Xplex />&mdash;your personal, self-hosted, open source, multi-streaming server</h3></center>
 
 ---
 

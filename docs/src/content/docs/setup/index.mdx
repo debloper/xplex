@@ -3,21 +3,33 @@ title: Setting up xplex
 description: A comprehensive guide on how many ways to setup xplex.
 ---
 import Xplex from '@components/Xplex.astro';
-import { LinkCard } from '@astrojs/starlight/components';
+import { Card, CardGrid, Icon, LinkCard } from '@astrojs/starlight/components';
 
-Setting up multi-streaming with <Xplex /> is simpler than configuring a streaming software like OBS or XSplit—even when using the [fully manual setup](/setup/native) mode.
+Setting up multi-streaming with <Xplex /> can be simpler than configuring a streaming software; or it can be a poster-child of the stereotypical CLI obsessed Linux user experience... YOU decide!
 
-However, for most users, we recommend deploying <Xplex /> using [Docker containers](/setup/docker). This method is not only easier but also far more effective, efficient & elegant. If you don't need to customize or rebuild <Xplex />'s internal components (i.e. most of you), then this is the fastest way to get started.
+### Choose your adventure
+
+For now, there are only two ways to deploy <Xplex />:
+
+<CardGrid>
+  <Card title="Recommended" icon="seti:docker">
+    <LinkCard
+      title="Run it with Docker"
+      description="The easiest, one-and-done way to get started with <b>xplex</b>."
+      href="/setup/docker"
+    />
+  </Card>
+  <Card title="Are you sure?" icon="linux">
+    <LinkCard
+      title="Setup & run it manually"
+      description="For complete control & flexibility, at the cost of convenience."
+      href="/setup/native"
+    />
+  </Card>
+</CardGrid>
+
+The recommend method (using Docker) is especially more effective, efficient & elegant, if you're using a cloud provider that offers ready to use system image with Docker preinstalled. Otherwise, you'll have to install Docker first.
 
 Just follow along the steps, and you'll be up and live in no time!
 
-<LinkCard
-  title="Run as a Docker Container"
-  description="The easiest way to get started with <b>xplex</b> (if you have Docker installed)."
-  href="/setup/docker"
-/>
-<LinkCard
-  title="Build and Deploy Manually"
-  description="For those who want complete control & full flexibility to setup <b>xplex</b>."
-  href="/setup/native"
-/>
+But for some reason, if you **really need** to customize or rebuild <Xplex />'s internal components, then you may want to manually build and install it. The guide is there only to point you towards the right direction; but if you're taking this path, then hopefully you know what you're doing.
