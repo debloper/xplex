@@ -1,11 +1,13 @@
 ---
 const {
   content = 'xplex',
-  color = '#b0b',
   isHQ = false
 } = Astro.props;
 
-const HQ = isHQ ? "HQ" : "";
+const HQ = isHQ ? "<sup>HQ</sup>" : "";
 ---
+<b set:html={content+HQ}></b>
 
-<b style=`color: ${color};`>{ content || 'xplex' }<sup>{ HQ }</sup></b>
+<style>
+  b { color: var(--sl-color-accent); }
+</style>

@@ -35,7 +35,10 @@
 #acknowledgement a {
   text-decoration: none;
 }
-.hero h1#_top {
+#_top:not(.hero #_top) {
+  text-align: center;
+}
+.hero #_top {
   text-transform: uppercase;
   font-weight: 300;
   color: var(--sl-color-gray-4);
@@ -50,4 +53,13 @@
 .card {
   padding: clamp(1rem, 1vw, 1.5rem);
   border-radius: 0.5rem;
+}
+.card .title span a {
+  text-decoration: none;
+}
+.contains-task-list {
+  list-style: none;
+}
+.contains-task-list li.task-list-item input[type="checkbox"]  {
+  margin: auto 0.5rem;
 }

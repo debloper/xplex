@@ -3,42 +3,95 @@ title: Run as a Docker Container
 description: A comprehensive guide on how to setup xplex with Docker containers.
 ---
 import Xplex from '@components/Xplex.astro';
-import { LinkCard, Steps } from '@astrojs/starlight/components';
+import { Badge, Card, Steps } from '@astrojs/starlight/components';
 
-:::note[Prerequisites' Checklist]
-To run <Xplex /> as a Docker container, you'll need to ensure that:
-- [ ] You have root access on the system.
-- [ ] You have [Docker installed](https://docs.docker.com/get-docker/) on your system.
-- [ ] There's no existing **nginx** service running on the system.
-- [ ] Port `80` (HTTP) and `1935` (RTMP) are available & not blocked by firewall.
-
-Once you've verified all of the above, you're good to go!
+:::note[DON'T PANIC]
+You may be running Docker for the first time today, but that doesn't mean it can't be fun!
 :::
+
+:::tip[Express Queue]
+If you went with the <Badge text="1-click setup option" variant="caution" /> with [Docker preinstalled system image](/setup/host#option-1-set-up-a-new-cloud-host)&mdash;then just skip the next queue of installing Docker and jump ahead to the [interesting bit](/setup/docker#run-the-docker-container) below.
+:::
+
+## Install Docker
+
+Installing Docker can be quite an involved process; especially considering all the platform and architecture variants it has to cover. It's best to follow the [official installation guide](https://docs.docker.com/engine/install/) as it's canonical & comprehensive&mdash;covering all the supported platforms.
+
+But for the most likely scenario of **installing Docker on a Debian based system**... in short:
 
 <Steps>
 
-1. **Run the <Xplex /> container**
-
+1. <details>
+   <summary>Update the package index & install certs</summary>
    ```bash
-   docker run -d --name xplex -p 80:80 -p 1935:1935 xplex/xplex
+   sudo apt update
+   sudo apt install ca-certificates curl
    ```
-
-2. **Mark it DONE on your TODO list**
-
-   No, really... That's it! You're done.
-
-   You can now access your <Xplex isHQ="true" /> dashboard at `http://<hostname-or-IP>/`
+   </details>
+2. <details>
+   <summary>Add Docker's official GPG key</summary>
+   ```bash
+   sudo install -m 0755 -d /etc/apt/keyrings
+   sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+   sudo chmod a+r /etc/apt/keyrings/docker.asc
+   ```
+   </details>
+3. <details>
+   <summary>Add Docker repository to sources list</summary>
+   ```bash
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   sudo apt update
+   ```
+   </details>
+4. <details>
+   <summary>Install Docker & its supporting package</summary>
+   ```bash
+   sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   ```
+   </details>
+5. <details>
+   <summary>Start Docker service & enable on boot</summary>
+   ```bash
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   ```
+   </details>
+6. <details>
+   <summary>Verify installation by running container</summary>
+   ```bash
+   docker --version
+   sudo docker run hello-world
+   ```
+   </details>
 
 </Steps>
 
----
+If you're new to all this and this seems a bit overwhelming; that's understandable.
 
-:::caution[Check Firewall Rules]
-If the host system is running a firewall, make sure to allow traffic on ports `80` (HTTP) & `1935` (RTMP). Follow [the firewall section](/setup/native#manage-firewall-rules) from manual installation guide to manage firewall.
-:::
+Which is why, <Badge text="we recommend" variant="caution" /> going with a [system image with Docker preinstalled](/setup/host#option-1-set-up-a-new-cloud-host).
 
-<LinkCard
-  title="Jump to the usage section"
-  description="Learn how to use <b>xplex</b><sup>HQ</sup> to configure <b>xplex</b> with multi-streaming ingest endpoints."
-  href="/usage"
-/>
+
+## Check Firewall Rules
+
+If the host is running a firewall, make sure to allow traffic on ports `80` (HTTP) & `1935` (RTMP). Follow [the firewall section](/setup/native#manage-firewall-rules) from manual installation guide to manage firewall if you need.
+
+
+## Run the Docker Container
+
+<Steps>
+
+1. ```bash title="Run the xplex container"
+   docker run -d --name xplex -p 80:80 -p 1935:1935 xplex/xplex
+   ```
+
+2. Open a browser & access your <Xplex isHQ /> dashboard at `http://<hostname-or-IP>/`
+
+</Steps>
+
+<span style="font-size: 4rem;">🎉🎉🎉</span>
+
+That's it... you now have a running <Xplex /> instance, ready for you to set up ingest URLs.
+
+<Card title="<a href='/usage'>Jump to the usage section</a>" icon="random">
+  Learn how to use <Xplex isHQ /> to configure <Xplex /> with multi-streaming ingest endpoints.
+</Card>

@@ -14,6 +14,13 @@ export default defineConfig({
       customCss: [
         './src/styles/custom.css',
       ],
+      head: [{
+        tag: 'meta',
+        attrs: {
+          property: 'og:image',
+          content: 'https://xplex.me/preview.png',
+        },
+      }],
       social: {
         github: 'https://github.com/debloper/xplex',
       },
@@ -29,6 +36,8 @@ export default defineConfig({
           label: 'Installation',
           items: [
             'setup/index',
+            'setup/host',
+            'setup/precheck',
             'setup/docker',
             'setup/native',
           ],

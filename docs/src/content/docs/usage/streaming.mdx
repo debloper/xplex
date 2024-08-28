@@ -42,9 +42,9 @@ import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
    Different platforms have different ways to test stream without going live, so check their platform documentation for specific details.
 
    :::note[Example with Twitch]
-   Twitch allows you to test stream without going live, by using `?bandwidthtest=true` parameter. The URL should look like `rtmp://{LOC##}.contribute.live-video.net/app/{live_0000000_xxxxxxxxxxxx}?bandwidthtest=true`.
+   Twitch allows you to test stream without going live, by using **`?bandwidthtest=true`** parameter. The URL should look like `rtmp://{LOC##}.contribute.live-video.net/app/{live_0000000_xxxxxxxxxxxx}?bandwidthtest=true`.
 
-   You will have to update <Xplex isHQ="true" /> with this URL before starting test stream. Make sure to reset the URL with `?bandwidthtest=true` parameter removed before going live.
+   You will have to update <Xplex isHQ="true" /> with this URL before starting test stream. Make sure to remove **`?bandwidthtest=true`** parameter from the ingest URL before going live.
    :::
 </Steps>
 

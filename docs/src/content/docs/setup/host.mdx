@@ -1,0 +1,144 @@
+---
+title: Get a Host System
+description: A comprehensive guide on how to choose a host system to run xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { Badge, Card, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+<Xplex /> can be setup to run on a wide variety of systems (though, some may need more cups of coffees than others); this guide will help you choose the most optimal host system for you to run it on.
+
+Even though you can set up <Xplex /> on your main workstation, in-house homelab or NAS server, existing VM on the cloud&mdash;the most sensible way to run it is on **a cloud instance, running Linux image, with Docker preinstalled** i.e. [the option #1](#option-1-set-up-a-new-cloud-host) up next.
+
+:::note[Does it **\*have to\*** be Linux?]
+To run <Xplex /> with Docker, the host system can even be running Windows or macOS. You only need Linux host to run it natively. Not sure why would you want to do that, but it's possible.
+:::
+
+:::tip[Do I **\*have to\*** use a cloud instance?]
+If you run all these extra processes & services on your main workstation, then there'll be less FPS & more lag for the game you're playing. If you use another system on the same network; your workstation's performance may not suffer, but the bandwidth still might.
+:::
+
+## Option 1: Set Up a New Cloud Host
+
+:::note[Who is this for?]
+For anyone without prior experience compute infrastuctre management, this is the expressway to get things done and move on, without getting lost in the 6D chess of system administration.
+:::
+
+<Steps>
+
+1. <details>
+   <summary>**Please check out the [cloud providers](/intro#how-much-does-it-cost) & choose one to go with**</summary>
+
+   - No need to be confused over trying to find a perfect match.
+   - Just pick one that draws you & avoid decision paralysis.
+   - You can always switch to a different provider later.
+   </details>
+
+2. <details>
+   <summary>**Sign up for an account & create a new instance**</summary>
+
+   - Use the referral link to sign up for free starting credits.
+   - <Badge text="Create a system with Docker preinstalled (link below)" variant="tip" />
+   - Choose a smallest allowed instance size to start with
+   - Choose a data center location that's closest to you
+   </details>
+
+3. <details>
+   <summary>**Remote login to the host over SSH**</summary>
+
+   - <Badge text="Follow cloud provider's instructions (link below)" variant="tip" />
+   - For the login terminal, you hava a couple of choices
+     - The cloud provider's built-in web-based terminal on their dashboard
+     - The latest Windows Terminal now supports SSH&mdash;PuTTY not needed
+     - And of course, on macOS or Linux, you can use the built-in terminal to login
+   </details>
+
+</Steps>
+
+Now, to avoid going through the rigorous details of each minute steps for each cloud providers; we have curated a list of providers with ready-to-go Docker images&mdash;just follow the links below & follow their guidance to get started:
+
+<Tabs>
+  <TabItem label="DigitalOcean">
+    🚀 [1-click deploy Docker image](https://marketplace.digitalocean.com/apps/docker) on DigitalOcean
+
+    📑 [Getting started guide](https://docs.digitalocean.com/products/droplets/getting-started/) for DigitalOcean
+
+    📡 [Remote access with SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/) for DigitalOcean
+  </TabItem>
+  <TabItem label="Linode">
+    🚀 [1-click deploy Docker image](https://www.linode.com/marketplace/apps/linode/docker/) on Linode
+
+    📑 [Getting started guide](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-compute-instances) for Linode
+
+    📡 [Remote access with SSH](https://techdocs.akamai.com/cloud-computing/docs/set-up-and-secure-a-compute-instance#connect-to-the-instance) for Linode
+  </TabItem>
+  <TabItem label="Vultr">
+    🚀 [1-click deploy Docker image](https://www.vultr.com/marketplace/apps/docker) on Vultr
+
+    📑 [Getting started guide](https://www.vultr.com/marketplace/apps/docker#getting-started) for Vultr
+
+    📡 [Remote access with SSH](https://docs.vultr.com/how-to-access-your-vultr-vps) for Vultr
+  </TabItem>
+</Tabs>
+
+Once you're logged in to the instance, you can skip everything else, and jump straight to:
+
+<Card title="<a href='/setup/docker'>Run as a Docker Container</a>" icon="seti:docker">
+  A comprehensive guide on how to setup <Xplex /> with Docker containers.
+</Card>
+
+## Option 2: Set Up an Existing Cloud Host
+
+:::note[Who is this for?]
+This is the next best choice, and it's for anyone with prior understanding of self-hosting services and already running cloud VMs where they may want to add <Xplex /> to the existing mix.
+:::
+
+If you're choosing this option then you don't need extensive hand-holding, but you should run the preliminary checks to ensure the host system won't run into a conflict & is ready to run <Xplex />.
+
+<Card title="<a href='/setup/precheck'>Run Preliminary Checks</a>" icon="approve-check-circle">
+  A comprehensive guide on how to check if your host system is ready to run <Xplex />.
+</Card>
+
+## Option 3: Set Up a Local System
+
+:::note[Who is this for?]
+This is for the folks who are running a homelab or NAS server, and want to add <Xplex /> to the existing mix of services. **But it's mainly for the folks who want to develop & improve <Xplex />**.
+:::
+
+:::caution[Keep in mind:]
+You may as well set it up on your workstation or laptop: but the experience may suffer.
+
+Preferably, **don't**.
+:::
+
+<Steps>
+
+1. <details>
+   <summary>**Ensure it's an `x86_64` system**</summary>
+
+   A lot of homelab servers are `ARM` based, and <Xplex /> doesn't support it [yet](/intro/internals#future-roadmap). You're welcome to [try](/setup/native), and if you succeed, please share your experience.
+   - On a Linux system, you can run `uname -m` to check the architecture.
+   - On a Windows system, you can check the system properties.
+   - On a macOS system, you can check the system information.
+   </details>
+
+2. <details>
+   <summary>**Ensure it's running a modern OS**</summary>
+
+   You should preferably be running Linux, especially if you want to run it natively without Docker. If you're on Windows or macOS, then you can run <Xplex /> with Docker.
+
+   If you have the flexibility to choose the distro, then go with a Debian-based distro like Ubuntu LTS, latest stable version of Debian or OpenMediaVault etc.
+   
+   Nothing wrong with other distros, but as we use Debian base images for creating the Docker containers, it's more comprehensively tested & less likely to have unpredictable surprises.
+   </details>
+
+3. <details>
+   <summary>**Ensure a stable wired network**</summary>
+
+   As we're dealing with video streaming, a stable wired network is a must. If you're on a wireless network, then you may face issues with latency, packet loss & jitter.
+   </details>
+
+</Steps>
+
+This has the most instance-to-instance variance & potentially undiscovered edge cases. You should definitely run the preliminary checks, and be on the lookout for any issues that you may face.
+
+But if you're using this option, then hopefully you know what you're doing. So, all the best!

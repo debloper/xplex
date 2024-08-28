@@ -3,11 +3,11 @@ title: Build and Deploy Manually
 description: A comprehensive guide on how to setup xplex on a native or virtual host.
 ---
 import Xplex from '@components/Xplex.astro';
-import { LinkCard, Tabs, TabItem } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-This is **not the recommended way to deploy xplex**, but if you're feeling adventurous and want to build and deploy it manually, then here's how to do it.
+This is **not the recommended way to deploy <Xplex />**, but if you're feeling adventurous&mdash;to build and deploy it manually (or, set up a development environment for <Xplex />), then here's how to do it.
 
-## Install Prerequisites
+## Install Dependencies
 
 Depending on the package manager the host system uses, the package names & the commands to install them will vary; please use the appropriate section below:
 
@@ -167,8 +167,3 @@ Depending on the available compute resources, the build may take a few minutes t
 
 🎉 Congrats... You should now have <Xplex /> up and running on your host system!
 
-<LinkCard
-  title="Jump to the usage section"
-  description="Learn how to use <b>xplex</b><sup>HQ</sup> to configure <b>xplex</b> with multi-streaming ingest endpoints."
-  href="/usage"
-/>

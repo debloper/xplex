@@ -3,21 +3,83 @@ title: Technical Overview
 description: The explanation of xplex's technical implementation.
 ---
 import Xplex from '@components/Xplex.astro';
+import { FileTree } from '@astrojs/starlight/components';
 
-## How does it work?
+## Strategic Abstract
 
-At its core, <Xplex /> is an [rtmp-enabled](https://github.com/arut/nginx-rtmp-module) [nginx server](http://nginx.org/) that splits & pushes incoming RTMP streams to one or more pre-configured RTMP endpoints.
+At its core, <Xplex /> is an [rtmp-enabled](https://github.com/arut/nginx-rtmp-module) [nginx server](http://nginx.org/) that pushes identical copies of incoming RTMP streams to one or more pre-configured RTMP endpoints.
 
-It also provides a simple web-based dashboard with REST API &mdash; called <Xplex isHQ="true" /> &mdash; to conveniently manage the ingest URLs.
+It also provides a simple web-based dashboard with REST API &mdash; called <Xplex isHQ /> &mdash; to conveniently manage the ingest URLs.
+
+## Design Principles
+
+<details>
+<summary>Effective</summary>
+make it do what it's supposed to do
+</details>
+<details>
+<summary>Efficient</summary>
+do it with minimal teleological overhead
+</details>
+<details>
+<summary>Elegant</summary>
+and with fluent grace of pieces falling in place
+</details>
+<details>
+<summary>Extensible</summary>
+while leaving room for progressive enhancements
+</details>
+
+## Repository Overview
+
+<FileTree>
+
+- .github/ ---> actions & workflows automations
+- app/ -------> source files for <Xplex isHQ /> server
+- conf/ ------> nginx configs for HTTP & RTMP
+- docs/ ------> website with landing page & docs
+- .gitignore
+- Dockerfile -> containerization instructions
+- **LICENSE** ---> source is available under **MPLv2.0**
+- README.md
+- setup.sh ---> <Xplex /> manual setup script
+- xplex.sh ---> <Xplex /> container startup script
+
+</FileTree>
+
+## Operational Steps
+
+- **There's no official `nginx-rtmp` container; so first, we built one from scratch.**
+  - You can build it by explicitly mentioning the target as `nginx` instead of `xplex` as the default target; e.g. `docker build --target nginx -t xplex/nginx .`
+- **Next up we implant the `nginx-rtmp` installation on a Node.js base image.**
+  - This is simpler than installing Node.js on the `nginx-rtmp` image.
+  - We may want to move out or refactor Node.js dependency in future.
+- **Then we apply configurations for the HTTP & RTMP servers.**
+  - But we don't start the nginx process yet
+  - Better to start the Node.js server (on port 8080) first
+  - Else nginx won't reverse proxy it to port 80 without another reload
+  - Reverse proxying is not functionally necessary for the setup to work, but it's the easiest way to infer that the setup is working by being able to access the dashboard over port 80.
+- **Then we install <Xplex isHQ /> as a simple Node.js app to manage the ingest URLs**
+- **Finally, we start the processes inside the container in sequence**
+  - The Node.js server is started first & sent to background
+  - Then the nginx process is started with daemon mode off
+  - This is needed to keep the container running & also helpful for following logs
 
 ## Future Roadmap
 
-- [ ] SRT support
-- [ ] RTMPS support
 - [ ] <Xplex isHQ /> improvements
 - [ ] Let's Encrypt integration
+- [ ] Unit & integration tests
+- [ ] x86, ARM, RISC-V support
+
+## Stretch Goals
+- [ ] RTMPS support
+- [ ] RTSP support
+- [ ] SRT support
+- [ ] HLS support
+- [ ] NDI support
 - [ ] ...and more
 
-:::danger[Stub Alert]
-This article needs more love. Please check back later.
+:::note[Missing Something?]
+If you can think of the missing pieces that will make understanding this technical overview easier and more enjoyable; or you have a question about the implementation, please [let us know](https://github.com/debloper/xplex/issues/new).
 :::

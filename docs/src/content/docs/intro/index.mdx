@@ -12,7 +12,7 @@ import Xplex from '@components/Xplex.astro';
 
 ## What does it do?
 
-<Xplex /> acts as a bridge between your streaming software (e.g. OBS Studio, Streamlabs OBS, XSplit etc.) and the streaming services (e.g. Twitch, YouTube etc.). It takes the stream from your streaming software and goes live on all of the streaming services you've asked it to &mdash; all at once!
+<Xplex /> acts as a bridge between your streaming software (e.g. OBS Studio, Streamlabs OBS, XSplit etc.) and the streaming services (e.g. Twitch, YouTube etc.). It takes the stream from your streaming software and goes live on all of the streaming services you've asked it to &mdash; **all at once**!
 
 :::note[Think of it this way...]
 Imagine <Xplex /> is an HDMI splitter. You connect your streaming software to <Xplex /> (like you connect your HDMI source to the splitter), and <Xplex /> forwards the stream to multiple streaming services (like the splitter forwards the video to multiple screens).
@@ -42,13 +42,23 @@ There's no transcoding involved, so not only the stream quality remains the same
 
 :::note[Choosing Cloud Host]
 Here's a price comparison of cheapest compute units provided by some popular cloud providers:
-| Cloud Host   | Compute      | Bandwidth | Cost       |
-|--------------|--------------|-----------|------------|
-| DigitalOcean | 1core, 0.5GB | 500GB     | $4/month   |
-| Linode       | 1core, 1.0GB | 1000GB    | $5/month   |
-| Vultr        | 1core, 0.5GB | 500GB     | $2.5/month |
+| Cloud Host   | Compute      | Bandwidth | Cost/month | Referral Link |
+|--------------|--------------|-----------|------------|---------------|
+| DigitalOcean | 1core, 0.5GB | 500GB     | $4         | [$200 starting credit](https://m.do.co/c/97a76c3ca7ad)         |
+| Linode       | 1core, 1.0GB | 1000GB    | $5         | Coming Soon                                                    |
+| Vultr        | 1core, 0.5GB | 500GB     | $2.5       | [$10 starting credit](https://www.vultr.com/?ref=9638716)      |
+
+Either of them should be a good option; however, the author has only extensively used & tested DigitalOcean. If you face any quirk or edge case on the other servers, please [let us know](https://github.com/debloper/xplex/issues/new).
+:::
+
+:::tip[Free Test Run]
+By using the referral links to sign up, you'll receive ample credits to explore `xplex` for a couple of months at no cost to you.
+
+While we have no affiliation with the mentioned cloud providers, should you choose to continue their services after the credits expire and spend a small amount ($25 on DO, $10 on Vultr), we'll receive an one-time cloud credit of the same value.
+
+There's no obligation, but your support would make a meaningful contribution to the project.
 :::
 
 ---
 
-With all that said, hopefully you now have a good idea of what to expect from <Xplex /> as a user. But, if you're still curious to know more about its internal details, let's dive in a bit deeper...
+Hopefully you now have a good idea of what to expect from <Xplex /> as a user. But, if you're still curious to know more about its internal details, let's dive in a bit deeper...

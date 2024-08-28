@@ -1,0 +1,130 @@
+---
+title: Run Preliminary Checks
+description: A comprehensive guide on how to check if your host system is ready to run xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { Badge, Card, Icon, Steps } from '@astrojs/starlight/components';
+
+If you're choosing to set up <Xplex /> on an existing local or cloud host, then you should run the preliminary checks to ensure the host system won't run into a conflict & is ready to run <Xplex />.
+
+It's better to run the checks even if you're on a fresh system&mdash;just to be sure&mdash;but it's not required.
+
+## 1. Check if you have superuser access
+
+As we'll be installing software and configuring services, it's a must to have superuser access to the host system. Try which one ever of the following options fits you the most, to verify root access:
+
+<Steps>
+
+1. <details>
+   <summary>I used `root` user to login to this host</summary>
+   ```bash title="Verify being root user"
+   whoami
+   ```
+   If it returns `root` then you have root access.
+   </details>
+
+2. <details>
+   <summary>My regular user has superuser privileges</summary>
+   ```bash title="Verify being superuser"
+   sudo -i
+   # you will be prompted to enter your password
+   ```
+   If it succeeds then you've superuser access.
+   </details>
+
+3. <details>
+   <summary>I know the `root` password, but my regular user isn't a superuser</summary>
+   ```bash title="Verify having root credentials"
+   su
+   # you will be prompted to enter root password
+   ```
+   If it succeeds then you've root access. While it's possible to run the setup as root, it's generally not recommended.
+
+   ```bash title="Add normal user to superuser group"
+   # replace `<username>` with actual username
+   adduser <username> sudo
+   # this is for Debian/Ubuntu based systems
+   ```
+   Once you login with that user the next time, you can use `sudo` to run commands with superuser privileges. Please verify it's working before proceeding to the next steps.
+   </details>
+
+</Steps>
+
+Once you've verified having superuser access, press <kbd>Ctrl+D</kbd> to exit root shell to become regular (albeit sudoer) user or type `exit` in the terminal and press <kbd>Enter</kbd> to the same effect.
+
+## 2. Check for existing `nginx` on the host
+
+If you're reusing a host system where you've previously installed nginx, then you should ensure that it's not going to conflict with <Xplex />.
+
+Go through the following commands in order to check if nginx is running:
+
+<Steps>
+
+1. <details>
+   <summary>Is `nginx` running as a service/daemon?</summary>
+   ```bash title="Check nginx service status"
+   systemctl status nginx
+   # should be inactive or not found
+   ```
+   If it shows `active` or `enabled`, it's up to you to decide whether to stop/disable it. It may be running important services on the host, so be careful of stopping or disabling it.
+   :::danger[NO WARRANTY & NO REFUNDS!]
+   Run the following commands only if you are absolutely sure that removing existing nginx won't break any critical services on the host, or you don't care if it does.
+   :::
+   ```bash title="Remove previous nginx service from host"
+   systemctl stop nginx
+   systemctl mask nginx
+   systemctl disable nginx
+   ```
+   </details>
+
+2. <details>
+   <summary>Is `nginx` running as a process?</summary>
+   ```bash title="Check nginx process status"
+   ps aux | grep nginx
+   ```
+   Even in this case, if it's running, then it's up to you to decide whether to stop it. It may break important services on the host, so be careful of stopping it.
+   :::danger[NO WARRANTY & NO REFUNDS!]
+   Run the following commands only if you are absolutely sure that removing existing nginx won't break any critical services on the host, or you don't care if it does.
+   :::
+   ```bash title="Stop existing nginx process"
+   nginx -s stop
+   ```
+   </details>
+
+3. <details>
+   <summary>Is `nginx` installed on host?</summary>
+   ```bash title="Check if nginx is available in $PATH"
+   which nginx
+   ```
+   If nginx is installed, but from the previous steps you've verified that it's not running, then you can safely ignore it. We will use a different (RTMP enabled) `nginx` build for <Xplex />.
+   
+   You can also choose to remove it if you're sure it'll not be needed (*not recommended*).
+   </details>
+
+</Steps>
+
+## 3. Check if required ports are available
+
+<Xplex /> needs to listen on ports `80` (HTTP) & `1935` (RTMP) to serve the web dashboard & accept RTMP streams. So, you should ensure that these ports are available & not being used by other services.
+
+```bash {2} title="Check ports availability"
+netstat -tuln | grep -E ':80|:1935'
+```
+
+If it returns some output similar to this:
+
+```bash title="Output if ports are busy"
+user@host:~# netstat -tuln | grep -E ':80|:1935'
+tcp        0      0 0.0.0.0:1935            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN     
+tcp6       0      0 :::1935                 :::*                    LISTEN     
+tcp6       0      0 :::80                   :::*                    LISTEN
+```
+
+Then that means the ports are in use by some other process & you should investigate further to find out which service is using the ports & decide whether to stop/disable it. In such cases <Badge text="it's better to use a fresh host system" variant="caution" /> than punching holes in an existing setup.
+
+If the command returns no output, then the ports are available & not being used by other services. You're done with the preliminary checks & all set to proceed with the next step, whichever way may you want to go:
+
+<Card title="<a href='/setup#choose-your-adventure'>Choose Your Adventure</a>" icon="puzzle">
+  Decide whether to run <Xplex /> natively or with Docker.
+</Card>

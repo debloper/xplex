@@ -3,13 +3,41 @@ title: Setting up xplex
 description: A comprehensive guide on how many ways to setup xplex.
 ---
 import Xplex from '@components/Xplex.astro';
-import { Card, CardGrid, Icon, LinkCard } from '@astrojs/starlight/components';
+import { Badge, Card, CardGrid, Icon, LinkCard } from '@astrojs/starlight/components';
 
-Setting up multi-streaming with <Xplex /> can be simpler than configuring a streaming software; or it can be a poster-child of the stereotypical CLI obsessed Linux user experience... YOU decide!
+Setting up multi-streaming with <Xplex /> is pretty straightforward. This guide is designed as an exploration game where you scoot along the terrain, then sometimes come to a fork of decision, and then make a choice to go with one that fits you the most.
 
-### Choose your adventure
+Technical expertise will definitely be helpful, but as long as you are excited & determined to see it through, lack of it shouldn't hold you back.
 
-For now, there are only two ways to deploy <Xplex />:
+**Just follow along the steps, and you'll be up and live in no time!**
+
+## Get a Host System
+
+As a self hosted service, <Xplex /> needs a ***host*** to run. By that we mean it needs a computer&mdash;albeit small or cheap and with an operating system &mdash;to run on.
+
+If this is super obvious to you; and you've already deciden on a host that's ready to go, then you can skip ahead to the next steps. But if you're new to this, then here's a guide to get you started:
+
+<Card title="<a href='/setup/host'>Get a Host System</a>" icon="laptop">
+  A comprehensive guide on how to choose a host system to run <Xplex />.
+</Card>
+
+## Run Preliminary Checks
+
+Before you start the setup process (especially if you're going with an existing homelab or cloud server with other services running on it, or maybe even on a new system with preinstalled software on it) you should ensure that the host system is ready to run it. This includes checking:
+
+- if you have root access
+- if there's no existing nginx service running, and
+- if the required ports are available & not blocked by firewall.
+
+Again, if you're already familiar with these checks, then you can skip ahead to the next steps. But if you're new to this, then here's a guide to get you started:
+
+<Card title="<a href='/setup/precheck'>Run Preliminary Checks</a>" icon="approve-check-circle">
+  A comprehensive guide on how to check if your host system is ready to run <Xplex />.
+</Card>
+
+## Choose Your Adventure
+
+Brace yourself, <Badge text="you're all set" /> to install <Xplex /> and there are two ways to go on about it:
 
 <CardGrid>
   <Card title="Recommended" icon="seti:docker">
@@ -29,7 +57,5 @@ For now, there are only two ways to deploy <Xplex />:
 </CardGrid>
 
 The recommend method (using Docker) is especially more effective, efficient & elegant, if you're using a cloud provider that offers ready to use system image with Docker preinstalled. Otherwise, you'll have to install Docker first.
-
-Just follow along the steps, and you'll be up and live in no time!
 
 But for some reason, if you **really need** to customize or rebuild <Xplex />'s internal components, then you may want to manually build and install it. The guide is there only to point you towards the right direction; but if you're taking this path, then hopefully you know what you're doing.
