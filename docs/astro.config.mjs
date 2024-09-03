@@ -25,6 +25,7 @@ export default defineConfig({
         github: 'https://github.com/debloper/xplex',
       },
       sidebar: [
+        { slug: 'quick-start' },
         {
           label: 'Introduction',
           items: [
@@ -33,21 +34,27 @@ export default defineConfig({
           ],
         },
         {
-          label: 'Installation',
-          items: [
-            'setup/index',
-            'setup/host',
-            'setup/precheck',
-            'setup/docker',
-            'setup/native',
-          ],
+          label: 'How-to Setup',
+          autogenerate: { directory: 'setup' },
         },
         {
-          label: 'Invocation',
+          label: 'References',
           items: [
-            'usage/index',
-            'usage/ingests',
-            'usage/streaming',
+            {
+              label: 'Choose',
+              items: [
+                'refs/choose/hosts',
+                'refs/choose/clouds',
+              ],
+            },
+            {
+              label: 'Check',
+              autogenerate: { directory: 'refs/check' },
+            },
+            {
+              label: 'Manage',
+              autogenerate: { directory: 'refs/manage' },
+            },
           ],
         },
       ],

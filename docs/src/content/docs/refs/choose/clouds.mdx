@@ -1,0 +1,115 @@
+---
+title: Cloud Host Provider
+description: A guide to help you choose the right cloud provider to run xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { Badge, Card, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+:::tip[Free Test Run]
+The referral sign up links will give you ample credits to try <Xplex /> for a few months at no cost.
+
+<Tabs>
+  <TabItem label="DigitalOcean">
+    <Card title="<a href='https://m.do.co/c/97a76c3ca7ad' title='DigitalOcean Referral Sign Up Link' target='_blank'>Sign up to DigitalOcean</a>" icon="information">
+      Use the link to get $200 starting credit on DigitalOcean for 2 months.
+    </Card>
+  </TabItem>
+  <TabItem label="Linode">
+    <Card title="<a href='https://login.linode.com/signup' title='Linode Sign Up Link' target='_blank'>Sign up to Linode</a>" icon="information">
+      Linode sign up link (no referral yet&mdash;you have to pay out of pocket).
+    </Card>
+  </TabItem>
+  <TabItem label="Vultr">
+    <Card title="<a href='https://www.vultr.com/?ref=9638716' title='Vultr Referral Sign Up Link' target='_blank'>Sign up to Vultr</a>" icon="information">
+      Use the link to get $10 starting credit on Vultr for 1 months.
+    </Card>
+  </TabItem>
+</Tabs>
+
+We have no affiliation with the cloud providers, but should you choose to continue their services after the credits expire and spend a small amount, we'll receive an one-time cloud credit.
+
+There's no obligation, but your support would make a meaningful contribution to the project.
+:::
+
+## Compare the Cloud Providers
+
+Here's a list of some popular cloud providers' <Badge text="cheapest" /> compute unit offerings, either of which should be enough to run <Xplex /> (however, the author has only extensively used DigitalOcean):
+| Cloud Host   | Compute      | Bandwidth | Cost/month |
+|--------------|--------------|-----------|------------|
+| DigitalOcean | 1core, 0.5GB | 500GB     | $4         |
+| Linode       | 1core, 1.0GB | 1000GB    | $5         |
+| Vultr        | 1core, 0.5GB | 500GB     | $2.5       |
+
+<details>
+<summary>If this is your first time setting up a cloud server, then start with [Vultr](https://www.vultr.com/?ref=9638716)</summary>
+- You can do a lot of trial & error with the $10 credit for a month.
+- You can run upto 4 parallel instances; so you can try different configurations.
+- And if you mess up, you can just destroy the instance & start over.
+</details>
+
+<details>
+<summary>If you're already familiar with cloud servers, then start with [DigitalOcean](https://m.do.co/c/97a76c3ca7ad)</summary>
+- They have a lot of (and arguably, the best) documentation & community support.
+- You can get $200 credit for 2 months, which is a lot of time to get comfortable.
+</details>
+
+<details>
+<summary>Feel free to switch host at any time, if you're not having a good experience</summary>
+- Don't be confused trying to find a perfect match.
+- You can always switch to a different provider later.
+- The best part of using Docker is that&mdash;apart from the IP addresses of the hosts&mdash;the end result should be predictably the exact same in all cases.
+</details>
+
+## Create a new instance with Docker
+
+For the smoothest experience, <Badge text="create instances with Docker preinstalled" /> & choose the <Badge text="closest data center location" /> to you.
+
+As mentioned before, you may choose the smallest offered instance size to run <Xplex />.
+
+<Tabs>
+  <TabItem label="DigitalOcean">
+    🚀 Start with DigitalOcean's [1-click deployment image](https://marketplace.digitalocean.com/apps/docker) with Docker preinstalled
+
+    📑 Use DigitalOcean's [getting started guide](https://docs.digitalocean.com/products/droplets/getting-started/) for reference
+  </TabItem>
+  <TabItem label="Linode">
+    🚀 Start with Linode's [1-click deployment image](https://www.linode.com/marketplace/apps/linode/docker/) with Docker preinstalled
+
+    📑 Use Linode's [getting started guide](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-compute-instances) for reference
+  </TabItem>
+  <TabItem label="Vultr">
+    🚀 Start with Vultr's [1-click deployment image](https://www.vultr.com/marketplace/apps/docker)  with Docker preinstalled
+
+    📑 Use Vultr's [getting started guide](https://www.vultr.com/marketplace/apps/docker#getting-started) for reference
+  </TabItem>
+</Tabs>
+
+
+---
+
+
+
+## Remote login to the host over SSH
+
+Cloud providers have official docs on the best way to connet to their instances:
+
+<Tabs>
+  <TabItem label="DigitalOcean">
+    📡 Remote access DigitalOcean droplets [over SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/)
+  </TabItem>
+  <TabItem label="Linode">
+    📡 Remote access Linode instances [over SSH](https://techdocs.akamai.com/cloud-computing/docs/set-up-and-secure-a-compute-instance#connect-to-the-instance)
+  </TabItem>
+  <TabItem label="Vultr">
+    📡 Remote access Vultr VPS [over SSH](https://docs.vultr.com/how-to-access-your-vultr-vps)
+  </TabItem>
+</Tabs>
+
+---
+
+But if you're familiar with remote logins, then apart from the cloud specific terminologies & UX differences, the process is pretty much the same everywhere.
+
+If you're new to cloud servers, then remote login is a way to get access&mdash;over terminal&mdash;to the cloud server you just created. For the login terminal, you hava a couple of choices:
+- The cloud provider's built-in web-based terminal on their dashboard
+- The latest Windows Terminal now supports SSH&mdash;PuTTY is not needed
+- And of course, on macOS or Linux, you can use the built-in terminal to login

@@ -1,0 +1,29 @@
+---
+title: Docker Installation
+description: How to install & verify Docker on a Debian based system.
+---
+import Xplex from '@components/Xplex.astro';
+import { Badge, Steps } from '@astrojs/starlight/components';
+
+Docker is necessary for running <Xplex /> as a container. If you went with the [system image with Docker preinstalled](/setup/host#option-1-set-up-a-new-cloud-host), or if you want to run <Xplex /> natively, then you can skip this section.
+
+## Verify Installation
+
+Before we get into the installation steps, let's verify if Docker is already installed on your system.
+
+```bash title="Check Docker Installation"
+docker --version
+sudo docker run hello-world
+```
+
+If you see a version number and the `hello world` container runs without any issue, then Docker is already installed.
+
+If not, then let's get started with the installation.
+
+## Installation Script
+
+```bash title="Get Docker One-liner"
+curl -fsSL https://get.docker.com | sudo sh
+```
+
+This script will install Docker on any Linux host. Make sure to verify the installation by running the commands mentioned above. 

@@ -1,0 +1,56 @@
+---
+title: Configure Firewall
+description: A comprehensive guide on how to use xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+
+<Xplex /> listens on port `80` (HTTP) & port `1935` (RTMP). Please make sure the firewall on the host system allows traffic on these ports. Depending on the frontend that the system uses to manage firewall, follow the appropriate section below:
+
+<Tabs>
+  <TabItem label="ufw">
+    `ufw` is typically used as frontend for `iptables` on Debian-based distros.
+
+    ```bash
+    # check firewall status
+    sudo ufw status
+    # allow HTTP traffic
+    sudo ufw allow http
+    # allow RTMP traffic
+    sudo ufw allow 1935
+    ```
+
+    Please follow Ubuntu's [official documentation](https://ubuntu.com/server/docs/firewalls) or, [community guide](https://help.ubuntu.com/community/UFW) for more advanced help with managing firewall rules.
+  </TabItem>
+  <TabItem label="firewalld">
+    `firewalld` is typically used as frontend for `iptables` on Fedora-based distros.
+
+    ```bash
+    # check firewall configuration
+    sudo firewall-cmd --list-all
+    # allow HTTP traffic
+    sudo firewall-cmd --add-service=http --permanent
+    # allow RTMP traffic
+    sudo firewall-cmd --add-port=1935/tcp --permanent
+    # reload firewall rules
+    sudo firewall-cmd --reload
+    ```
+
+    You can follow Fedora's [official documentation](https://docs.fedoraproject.org/en-US/quick-docs/firewalld/) for more advanced help with managing firewall rules.
+  </TabItem>
+  <TabItem label="iptables">
+    If you're on a system that uses some other frontend for `iptables`, then please consult its official documentation.
+    
+    Or you can directly manage `iptables` rules to allow HTTP & RTMP traffic:
+
+    ```bash
+    # allow HTTP traffic
+    sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+    # allow RTMP traffic
+    sudo iptables -A INPUT -p tcp --dport 1935 -j ACCEPT
+    # save updated rules
+    sudo iptables-save
+    ```
+  </TabItem>
+</Tabs>

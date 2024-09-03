@@ -1,0 +1,32 @@
+---
+title: Quick Start
+description: Abridged manual for setting up xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { Steps } from '@astrojs/starlight/components';
+
+:::note[Brevity Alert]
+This gets you jump-started with <Xplex />. For more comprehensive docs, use the [how-to](/setup) guide.
+:::
+
+<Steps>
+
+1. ```bash title="Run the xplex container"
+   docker run -d --name xplex -p 80:80 -p 1935:1935 xplex/xplex
+   ```
+
+2. Open a browser & access your <Xplex isHQ /> dashboard at `http://<hostname-or-IP>/` to ensure <Xplex /> is up & running.
+
+3. Add the [ingest URLs](/refs/manage/ingest) of the platforms you want to stream to (e.g. YouTube, Twitch etc), in the <Xplex isHQ /> dashboard & apply changes to reload new settings.
+
+4. Configure your streaming software to send the stream to <Xplex />, by setting the streaming server URL to `rtmp://<xplex-hostname-or-IP>:1935/live`.
+
+5. Start streaming! 
+
+   <span style="font-size: 4rem;">🚀🚀🚀</span>
+
+</Steps>
+
+:::tip[For more details]
+Check the [docker setup guide](/setup/docker) for more detailed instructions.
+:::

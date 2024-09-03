@@ -1,0 +1,55 @@
+---
+title: Conflicting nginx
+description: Check if existing nginx is running on the host system.
+---
+import Xplex from '@components/Xplex.astro';
+import { Badge, Card, Icon, Steps } from '@astrojs/starlight/components';
+
+You should ensure your host is <Badge text="NOT" variant="caution" /> already running `nginx` which will conflict with <Xplex />.
+
+These following checks are especially necessary if you're reusing a host system, which may already have `nginx` installed & running for other services:
+
+<Steps>
+
+1. <details>
+   <summary>Is `nginx` running as a service/daemon?</summary>
+   ```bash title="Check nginx service status"
+   systemctl status nginx
+   # should be inactive or not found
+   ```
+   If it shows `active` or `enabled`, it's up to you to decide whether to stop/disable it. It may be running important services on the host, so be careful of stopping or disabling it.
+   :::danger[NO WARRANTY & NO REFUNDS!]
+   Run the following commands only if you are absolutely sure that removing existing nginx won't break any critical services on the host, or you don't care if it does.
+   :::
+   ```bash title="Remove previous nginx service from host"
+   systemctl stop nginx
+   systemctl mask nginx
+   systemctl disable nginx
+   ```
+   </details>
+
+2. <details>
+   <summary>Is `nginx` running as a process?</summary>
+   ```bash title="Check nginx process status"
+   ps aux | grep nginx
+   ```
+   Even in this case, if it's running, then it's up to you to decide whether to stop it. It may break important services on the host, so be careful of stopping it.
+   :::danger[NO WARRANTY & NO REFUNDS!]
+   Run the following commands only if you are absolutely sure that removing existing nginx won't break any critical services on the host, or you don't care if it does.
+   :::
+   ```bash title="Stop existing nginx process"
+   nginx -s stop
+   ```
+   </details>
+
+3. <details>
+   <summary>Is `nginx` installed on host?</summary>
+   ```bash title="Check if nginx is available in $PATH"
+   which nginx
+   ```
+   If nginx is installed, but from the previous steps you've verified that it's not running, then you can safely ignore it. We will use a different (RTMP enabled) `nginx` build for <Xplex />.
+   
+   You can also choose to remove it if you're sure it'll not be needed (*not recommended*).
+   </details>
+
+</Steps>

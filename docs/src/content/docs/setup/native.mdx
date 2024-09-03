@@ -1,11 +1,11 @@
 ---
-title: Build and Deploy Manually
+title: Run native setup
 description: A comprehensive guide on how to setup xplex on a native or virtual host.
 ---
 import Xplex from '@components/Xplex.astro';
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
-This is **not the recommended way to deploy <Xplex />**, but if you're feeling adventurous&mdash;to build and deploy it manually (or, set up a development environment for <Xplex />), then here's how to do it.
+This is **not the recommended way to setup <Xplex />** (even as a developer environment), but if you're feeling adventurous&mdash;to build and deploy it without containerization, then here's how to do it.
 
 ## Install Dependencies
 
@@ -50,7 +50,7 @@ Depending on the package manager the host system uses, the package names & the c
 </Tabs>
 
 :::caution[Just in Case]
-If you end up installing additional packages for a successful build, please [let us know](https://github.com/debloper/xplex/issues/new).
+If you end up installing additional packages for a successful build, please [let us know](https://github.com/debloper/xplex/issues).
 :::
 
 ## Download Code
@@ -62,6 +62,7 @@ If you end up installing additional packages for a successful build, please [let
     ```bash
     git clone https://github.com/debloper/xplex.git
     cd xplex
+    git checkout v1.0.0
     ```
   </TabItem>
   <TabItem label="Zip">
@@ -92,78 +93,23 @@ If you end up installing additional packages for a successful build, please [let
 
 ## Run Setup Script
 
-Inside the project directory, you'll find a `setup.sh` script that will automate all the distro-agnostic tasks to get <Xplex /> up and running, like:
+Inside the directory, there's a `setup.sh`, which automates the tasks to get <Xplex /> up and running:
 
-- building & installing `nginx` with `rtmp`
-- updating `nginx` configuration
-- installing <Xplex isHQ /> frontend
-- start processes/services.
-
-```bash
-# it's generally a good idea to read the script
-# to understand what it does, before running it
-cat setup.sh
-# if you're comfortable with the script, run it
+```bash title="NOTE: audit the script before running it"
 sudo ./setup.sh
-# or, you can even run each command separately.
+# or, you can configure and run each of its commands separately.
 ```
 
 :::note
 Depending on the available compute resources, the build may take a few minutes to complete. On a VM with 4 modern CPU cores and 4GB RAM, it takes about 2-3 minutes.
 :::
 
+
 ## Manage Firewall Rules
 
-<Xplex /> listens on port `80` (HTTP) & port `1935` (RTMP). Please make sure the firewall on the host system allows traffic on these ports. Depending on the frontend that the system uses to manage firewall, follow the appropriate section below:
+<Xplex /> uses port `80` for HTTP & port `1935` for RTMP. Please make sure the [firewall on the host system is configured](/ref/manage/firewall) to allow traffic on these ports.
 
-<Tabs>
-  <TabItem label="ufw">
-    `ufw` is typically used as frontend for `iptables` on Debian-based distros.
 
-    ```bash
-    # check firewall status
-    sudo ufw status
-    # allow HTTP traffic
-    sudo ufw allow http
-    # allow RTMP traffic
-    sudo ufw allow 1935
-    ```
+## Access the Dashboard
 
-    Please follow Ubuntu's [official documentation](https://ubuntu.com/server/docs/firewalls) or, [community guide](https://help.ubuntu.com/community/UFW) for more advanced help with managing firewall rules.
-  </TabItem>
-  <TabItem label="firewalld">
-    `firewalld` is typically used as frontend for `iptables` on Fedora-based distros.
-
-    ```bash
-    # check firewall configuration
-    sudo firewall-cmd --list-all
-    # allow HTTP traffic
-    sudo firewall-cmd --add-service=http --permanent
-    # allow RTMP traffic
-    sudo firewall-cmd --add-port=1935/tcp --permanent
-    # reload firewall rules
-    sudo firewall-cmd --reload
-    ```
-
-    You can follow Fedora's [official documentation](https://docs.fedoraproject.org/en-US/quick-docs/firewalld/) for more advanced help with managing firewall rules.
-  </TabItem>
-  <TabItem label="iptables">
-    If you're on a system that uses some other frontend for `iptables`, then please consult its official documentation.
-    
-    Or you can directly manage `iptables` rules to allow HTTP & RTMP traffic:
-
-    ```bash
-    # allow HTTP traffic
-    sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-    # allow RTMP traffic
-    sudo iptables -A INPUT -p tcp --dport 1935 -j ACCEPT
-    # save updated rules
-    sudo iptables-save
-    ```
-  </TabItem>
-</Tabs>
-
----
-
-🎉 Congrats... You should now have <Xplex /> up and running on your host system!
-
+Open a browser & access your <Xplex isHQ /> dashboard at `http://<hostname-or-IP>/`. If you can see the dashboard, then <Xplex /> is up and running & ready for the multi-streaming setup. 🎉

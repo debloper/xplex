@@ -1,21 +1,25 @@
 ---
-title: Setting up xplex
+title: Set up overview
 description: A comprehensive guide on how many ways to setup xplex.
 ---
 import Xplex from '@components/Xplex.astro';
 import { Badge, Card, CardGrid, Icon, LinkCard } from '@astrojs/starlight/components';
 
-Setting up multi-streaming with <Xplex /> is pretty straightforward. This guide is designed as an exploration game where you scoot along the terrain, then sometimes come to a fork of decision, and then make a choice to go with one that fits you the most.
+Setting up multi-streaming with <Xplex /> is pretty straightforward. Some technical expertise will sure be handy, but the only thing you need in abundance is excitement & determination to see it through.
 
-Technical expertise will definitely be helpful, but as long as you are excited & determined to see it through, lack of it shouldn't hold you back.
+:::tip[Docs can be fun too!]
+This guide is like an exploration adventure where you scoot along the terrain... sometimes coming to a fork of decision, and then make a choice to go with one that fits you the most.
 
-**Just follow along the steps, and you'll be up and live in no time!**
+You may not even be installing <Xplex /> at the moment&mdash;that doesn't mean you can't have fun!
+:::
+
+**And if you just follow along the steps, you'll be up and live in no time!**
 
 ## Get a Host System
 
-As a self hosted service, <Xplex /> needs a ***host*** to run. By that we mean it needs a computer&mdash;albeit small or cheap and with an operating system &mdash;to run on.
+As a self hosted service, <Xplex /> needs a ***host*** to run. By that we mean it needs a computer&mdash;albeit small or cheap; but with an operating system &mdash;to run on.
 
-If this is super obvious to you; and you've already deciden on a host that's ready to go, then you can skip ahead to the next steps. But if you're new to this, then here's a guide to get you started:
+If this is super obvious to you; and you've already decided on a host that's ready to go, then you can skip ahead to the next steps. But if you're new to this, then here's a guide to get you started:
 
 <Card title="<a href='/setup/host'>Get a Host System</a>" icon="laptop">
   A comprehensive guide on how to choose a host system to run <Xplex />.
@@ -56,6 +60,6 @@ Brace yourself, <Badge text="you're all set" /> to install <Xplex /> and there a
   </Card>
 </CardGrid>
 
-The recommend method (using Docker) is especially more effective, efficient & elegant, if you're using a cloud provider that offers ready to use system image with Docker preinstalled. Otherwise, you'll have to install Docker first.
+The recommend method (using Docker) will take **altogether 5-10min** to set it all up... and that's including signing up to a [cloud provider](/intro#how-much-does-it-cost). Whereas the manual method will take considerably longer (from 30min to a few hours), depending on your hardware and software environment.
 
-But for some reason, if you **really need** to customize or rebuild <Xplex />'s internal components, then you may want to manually build and install it. The guide is there only to point you towards the right direction; but if you're taking this path, then hopefully you know what you're doing.
+But for some reason, if you **really need** to customize or rebuild <Xplex />'s internal components&mdash;either to fit your specific requirements or to set up a development environment&mdash;then you may want to manually build and install it. The guide is there only to point you towards the right direction; but if you're taking this path, then hopefully you know what you're doing.

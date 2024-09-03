@@ -1,0 +1,81 @@
+---
+title: Host System Type
+description: A guide to help you choose the right host system to run Xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { Badge, Card, Steps } from '@astrojs/starlight/components';
+
+<Xplex /> can be setup to run on a wide variety of systems (though, some may need more cups of coffee than others); but you can broadly group them into one of these 3 categories:
+
+<Steps>
+
+1. <details>
+   <summary>**Use New Cloud Host** <Badge text="recommended" /></summary>
+
+   :::note[Who is this option for?]
+   You're not into system administration. You just want to get things done and move on.
+   :::
+
+   Just create an instance on the [cloud provider of your choice](/refs/decide/clouds), and then follow the guide on [how-to run as a Docker container](/setup/docker).
+   </details>
+2. <details>
+   <summary>**Use Existing Cloud Host**</summary>
+
+   :::note[Who is this for?]
+   You're a system administrator with prior understanding of self-hosting services and already have cloud VMs where you may want to add <Xplex /> to the existing mix.
+   :::
+   If you're choosing this option then you don't need hand-holding, but you should run the checks to ensure the host system has the [ports available](/refs/check/ports/) & won't [run into conflicts](/refs/check/nginx/).
+   </details>
+3. <details>
+   <summary>**Use Local System as Host**</summary>
+
+   :::note[Who is this for?]
+   You're setting up a development environment, or are running a homelab or NAS server, and want to add <Xplex /> to the existing mix of services.
+   :::
+
+   <details>
+   <summary>Ensure it's an `x86_64` system</summary>
+     - A lot of homelab servers are `ARM` based, and <Xplex /> doesn't support it [yet](/intro/internals#future-roadmap).
+     - You're welcome to [try](/setup/native), and if you succeed, please share your experience.
+     - On a Linux system, you can run `uname -m` to check the architecture.
+   </details>
+   <details>
+   <summary>Ensure it's running a modern OS</summary>
+     You should preferably be running Linux, especially if you want to run it natively without Docker. If you're on Windows or macOS, then you can run <Xplex /> with Docker.
+
+     If you have the flexibility to choose the distro, then go with a Debian-based distro like Ubuntu LTS, latest stable version of Debian or OpenMediaVault etc.
+
+     Nothing wrong with other distros, but as we use Debian base images for creating the Docker containers, it's more comprehensively tested & less likely to have unpredictable surprises.
+   </details>
+   <details>
+   <summary>Ensure a stable wired network</summary>
+     As we're dealing with video streaming, a stable wired network is a must. If you're on a wireless network, then you may face issues with latency, packet loss & jitter.
+   </details>
+
+   This has the most instance-to-instance variance & undiscovered edge cases. You should definitely run the checks, and be on the lookout for any issues that you may face.
+
+   But if you're using this option, then hopefully you know what you're doing. So, **all the best!**
+
+   </details>
+
+</Steps>
+
+:::note[Do I **\*have to\*** use Docker?]
+<Xplex /> can be installed on a [native Linux host](/setup/native) without Docker; but the experience of [deploying it with Docker](/setup/docker) is much more convenient & less prone to situational variations.
+:::
+
+:::tip[Do I **\*have to\*** use Linux as host?]
+To run <Xplex /> with Docker, the host system can even be running Windows or macOS. It doesn't make much sense, but it's possible. A Linux host is only a must to run it natively.
+:::
+
+:::danger[Do I **\*have to\*** use a cloud instance?]
+If you run all these extra processes & services on your main workstation, then you're adding more compute & network overhead for your system to handle. If you use another system on the same network; your workstation's performance may not suffer, but the bandwidth still might.
+
+So it's best to use a host that's not in your network, is always on, and closer to the ingest servers.
+
+Which is why using a cloud instance is the most sensible choice.
+:::
+
+
+
+

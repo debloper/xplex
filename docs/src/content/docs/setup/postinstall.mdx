@@ -1,0 +1,66 @@
+---
+title: Post-installation
+description: A comprehensive guide on how to use xplex.
+---
+import Xplex from '@components/Xplex.astro';
+import { Card, CardGrid, LinkCard, Steps, TabItem, Tabs } from '@astrojs/starlight/components';
+
+Regardless of the installation mechanism you went with, once you're done with it, you should be able to verify its success by accessing the `http://<hostname-or-IP>/` URL from your browser.
+
+If you can see the <Xplex isHQ="true" /> dashboard&mdash;then the internal components of <Xplex /> are working correctly.
+
+You're now all set to proceed with configuring your ingest endpoints.
+
+
+## Add Ingest Endpoints
+
+<Steps>
+1. **Get ingest URLs** for the streaming services you're planning to stream to. The guide to [collect ingest endpoints](/refs/manage/ingest) may come in handy.
+
+2. **Add Ingest URLs** to the `"Add new ingest URL"` field in <Xplex isHQ="true" /> dashboard and click `"Add Ingest"` button (or press <kbd>Enter</kbd>). Make sure the URLs are properly formatted, doesn't contain any extra characters or spaces, and the stream key is correct.
+
+3. **Apply Changes** once you're done adding all the outgoing ingests, to commit it to the <Xplex /> server. This will hot-reload the new configuration in the running <Xplex /> container & and you can immediately start streaming to all the services you've added.
+</Steps>
+
+:::note[Tip]
+You can remove any wrong/expired ingest URL by clicking the `"x"` button next to it.
+:::
+
+
+## Configure Streaming Software
+
+Next up, you need to setup your streaming software. Head over to the [streaming software setup](/usage/streaming) to learn how to configure OBS, XSplit, or any other streaming software to stream to <Xplex />.
+
+
+<Steps>
+1. **Set Streaming Endpoint** by opening the settings/preferences of your streaming software (e.g. OBS, XSplit etc.) and updating its streaming endpoint to the <Xplex />'s ingest URL.
+
+   ```bash title="Example xplex Ingest URL&mdash;for host IP 256.128.64.32" /256.*32/
+   rtmp://256.128.64.32:1935/live
+   # you can also use a hostname instead of IP, if you have the know-how
+   ```
+
+   :::note[For Mandatory Stream Key]
+   If the software has two separate fields for `server URL` & `stream key` and won't let you keep the `stream key` field blank, then put the <Xplex /> ingest endpoint in the `server URL` field & any URL-safe random string in the `stream key` field (e.g. `1234` or `asdf`).
+   
+   <Xplex /> will ignore the `stream key`, and just use the `server URL` for routing.
+   :::
+
+2. **Review Encoding Settings** to ensure it uses [optimal encoding](/refs/manage/encoder) that's supported by ***ALL*** the platforms you're planning to stream to.
+
+   :::tip[Rule of Thumb]
+   For maximum compatibility, stream at 1080p@30fps with a bitrate of 5000 Kbps.
+   :::
+
+
+3. **Run a Test Stream** before going live, to make sure everything is working as expected.
+
+   Different platforms have different ways to test stream without going live, so check their platform documentation (e.g. for [Twitch](https://help.twitch.tv/s/article/twitch-stream-key-faq?language=en_US#FAQ)) for specific details.
+
+</Steps>
+
+If you've made it this far, then congrats & welcome to <Xplex content="Team xplex" />.
+
+All the best with your multi-streaming journey!
+
+<span style="font-size: 4rem;">🚀🚀🚀</span>

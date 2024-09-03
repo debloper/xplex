@@ -1,0 +1,26 @@
+---
+title: Port Availability
+description: Check if required ports are available on the host system.
+---
+import Xplex from '@components/Xplex.astro';
+import { Badge, Card, Icon, Steps } from '@astrojs/starlight/components';
+
+<Xplex /> needs to listen on ports `80` (HTTP) & `1935` (RTMP) to serve the web dashboard & accept RTMP streams. So, you should ensure that these ports are available & not being used by other services.
+
+```bash {2} title="Check ports availability"
+netstat -tuln | grep -E ':80|:1935'
+```
+
+If it returns some output similar to this:
+
+```bash title="Output if ports are busy"
+user@host:~# netstat -tuln | grep -E ':80|:1935'
+tcp        0      0 0.0.0.0:1935            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN     
+tcp6       0      0 :::1935                 :::*                    LISTEN     
+tcp6       0      0 :::80                   :::*                    LISTEN
+```
+
+Then that means the <Badge text="ports are in use" variant="danger" /> by some other process. You should investigate further to find out which service is using the ports & decide whether to stop/disable it. In such cases it's better to <Badge text="use a fresh host system" variant="caution" /> than punching holes in an existing setup.
+
+But if it returns <Badge text="no output" />, then the <Badge text="ports are available" /> & not being used by other services. 🎉
