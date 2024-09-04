@@ -1,32 +1,12 @@
 ---
 title: Run with Docker
 description: A comprehensive guide on how to setup xplex with Docker containers.
+next:
+  link: /setup/postinstall
+  label: Post-installation
 ---
 import Xplex from '@components/Xplex.astro';
-import { Badge, Card, Steps } from '@astrojs/starlight/components';
-
-:::note[]
-If you went with the <Badge text="1-click setup" variant="caution" /> option with [Docker preinstalled](/refs/choose/clouds) system image on a cloud instance&mdash;then skip the next sections and jump ahead to the [interesting bit](/setup/docker#run-the-docker-container) down below.
-:::
-
-## Requirements
-
-<Steps>
-
-1. [**Verify superuser access**](/refs/check/superuser)
-2. [**Ensure Docker is installed**](/refs/check/docker)
-3. [**Look out for conflicting nginx**](/refs/check/nginx)
-4. [**Confirm required ports are free**](/refs/check/ports)
-
-</Steps>
-
-
-## Configure Firewall
-
-If the host is running a firewall, make sure to allow traffic on ports `80` (HTTP) & `1935` (RTMP). Follow [the firewall guide](/refs/manage/firewall) to learn how to open ports on your system.
-
-
-## Run the Docker Container
+import { Steps } from '@astrojs/starlight/components';
 
 <Steps>
 
@@ -34,14 +14,13 @@ If the host is running a firewall, make sure to allow traffic on ports `80` (HTT
    docker run -d --name xplex -p 80:80 -p 1935:1935 xplex/xplex
    ```
 
-2. Open a browser & access your <Xplex isHQ /> dashboard at `http://<hostname-or-IP>/`
+2. Check the [firewall guide](/refs/manage/firewall) to ensure the host allows traffic on ports `80` (HTTP) & `1935` (RTMP).
+
+3. Open a browser & access your <Xplex isHQ /> dashboard at `http://<hostname-or-IP>/`
 
 </Steps>
 
 <span style="font-size: 4rem;">🎉🎉🎉</span>
 
-That's it... you now have a running <Xplex /> instance, which is ready for the multi-streaming setup.
+That's it... you now have a running <Xplex /> instance, which is ready for the [post-installation setup](/setup/postinstall).
 
-<Card title="<a href='/postinstall'>Jump to the post-installation configurations</a>" icon="random">
-  Configure <Xplex isHQ /> & your streaming software to setup <Xplex /> for multi-streaming.
-</Card>

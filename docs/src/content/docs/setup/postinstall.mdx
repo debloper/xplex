@@ -1,6 +1,8 @@
 ---
 title: Post-installation
-description: A comprehensive guide on how to use xplex.
+description: Post-installation steps to configure xplex for multi-streaming.
+prev: false
+next: false
 ---
 import Xplex from '@components/Xplex.astro';
 import { Card, CardGrid, LinkCard, Steps, TabItem, Tabs } from '@astrojs/starlight/components';
@@ -17,20 +19,13 @@ You're now all set to proceed with configuring your ingest endpoints.
 <Steps>
 1. **Get ingest URLs** for the streaming services you're planning to stream to. The guide to [collect ingest endpoints](/refs/manage/ingest) may come in handy.
 
-2. **Add Ingest URLs** to the `"Add new ingest URL"` field in <Xplex isHQ="true" /> dashboard and click `"Add Ingest"` button (or press <kbd>Enter</kbd>). Make sure the URLs are properly formatted, doesn't contain any extra characters or spaces, and the stream key is correct.
+2. **Add Ingest URLs** to the `"Add new ingest URL"` field in <Xplex isHQ="true" /> dashboard and click `"Add Ingest"` button (or press <kbd>Enter</kbd>). Make sure the URLs are correct & properly formatted.
 
-3. **Apply Changes** once you're done adding all the outgoing ingests, to commit it to the <Xplex /> server. This will hot-reload the new configuration in the running <Xplex /> container & and you can immediately start streaming to all the services you've added.
+3. **Apply Changes** once you're done adding all the outgoing ingests, to commit it to the <Xplex /> server. This will hot-reload the new configuration in the running <Xplex /> container.
 </Steps>
-
-:::note[Tip]
-You can remove any wrong/expired ingest URL by clicking the `"x"` button next to it.
-:::
 
 
 ## Configure Streaming Software
-
-Next up, you need to setup your streaming software. Head over to the [streaming software setup](/usage/streaming) to learn how to configure OBS, XSplit, or any other streaming software to stream to <Xplex />.
-
 
 <Steps>
 1. **Set Streaming Endpoint** by opening the settings/preferences of your streaming software (e.g. OBS, XSplit etc.) and updating its streaming endpoint to the <Xplex />'s ingest URL.

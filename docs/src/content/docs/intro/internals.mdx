@@ -55,15 +55,13 @@ while leaving room for progressive enhancements
   - This is simpler than installing Node.js on the `nginx-rtmp` image.
   - We may want to move out or refactor Node.js dependency in future.
 - **Then we apply configurations for the HTTP & RTMP servers.**
-  - But we don't start the nginx process yet
-  - Better to start the Node.js server (on port 8080) first
-  - Else nginx won't reverse proxy it to port 80 without another reload
-  - Reverse proxying is not functionally necessary for the setup to work, but it's the easiest way to infer that the setup is working by being able to access the dashboard over port 80.
+  - The HTTP server reverse proxies the <Xplex /> server to run on port 8080 to port 80.
+  - Reverse proxying is not functionally necessary for the setup to work (API or stream).
+  - But accessing dashboard over port 80 the easiest way to validate nginx build success.
 - **Then we install <Xplex isHQ /> as a simple Node.js app to manage the ingest URLs**
 - **Finally, we start the processes inside the container in sequence**
   - The Node.js server is started first & sent to background
   - Then the nginx process is started with daemon mode off
-  - This is needed to keep the container running & also helpful for following logs
 
 ## Future Roadmap
 

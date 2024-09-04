@@ -1,65 +1,65 @@
 ---
 title: Set up overview
 description: A comprehensive guide on how many ways to setup xplex.
+prev:
+  link: /quick-start
+  label: Quick Start
 ---
 import Xplex from '@components/Xplex.astro';
-import { Badge, Card, CardGrid, Icon, LinkCard } from '@astrojs/starlight/components';
+import { Badge, Card, CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
 
-Setting up multi-streaming with <Xplex /> is pretty straightforward. Some technical expertise will sure be handy, but the only thing you need in abundance is excitement & determination to see it through.
-
-:::tip[Docs can be fun too!]
-This guide is like an exploration adventure where you scoot along the terrain... sometimes coming to a fork of decision, and then make a choice to go with one that fits you the most.
-
-You may not even be installing <Xplex /> at the moment&mdash;that doesn't mean you can't have fun!
-:::
+Setting up multi-streaming with <Xplex /> is pretty straightforward. Some technical expertise will be handy&mdash;but what's crucial&mdash;is your excitement & determination to see it through.
 
 **And if you just follow along the steps, you'll be up and live in no time!**
 
 ## Get a Host System
 
-As a self hosted service, <Xplex /> needs a ***host*** to run. By that we mean it needs a computer&mdash;albeit small or cheap; but with an operating system &mdash;to run on.
+As a self hosted service, <Xplex /> needs a ***host*** to run. By that we mean it needs a computer&mdash;albeit small or cheap; but with an operating system &mdash;to run on. This reference will help you decide:
 
-If this is super obvious to you; and you've already decided on a host that's ready to go, then you can skip ahead to the next steps. But if you're new to this, then here's a guide to get you started:
-
-<Card title="<a href='/setup/host'>Get a Host System</a>" icon="laptop">
-  A comprehensive guide on how to choose a host system to run <Xplex />.
+<Card title="<a href='/refs/choose/hosts'>Choose Host System</a>" icon="laptop">
+  A guide to help you choose the right host system to run <Xplex />.
 </Card>
+
 
 ## Run Preliminary Checks
 
-Before you start the setup process (especially if you're going with an existing homelab or cloud server with other services running on it, or maybe even on a new system with preinstalled software on it) you should ensure that the host system is ready to run it. This includes checking:
+If you're using an existing homelab or cloud server with other services running on it, or even on a new system with preinstalled software packages&mdash;validate that it meets the requirements to run <Xplex />:
 
-- if you have root access
-- if there's no existing nginx service running, and
-- if the required ports are available & not blocked by firewall.
+<Steps>
 
-Again, if you're already familiar with these checks, then you can skip ahead to the next steps. But if you're new to this, then here's a guide to get you started:
+1. [**Verify superuser access**](/refs/check/superuser)
+2. [**Ensure Docker is installed**](/refs/check/docker)
+3. [**Look out for conflicting nginx**](/refs/check/nginx)
+4. [**Confirm required ports are free**](/refs/check/ports)
 
-<Card title="<a href='/setup/precheck'>Run Preliminary Checks</a>" icon="approve-check-circle">
-  A comprehensive guide on how to check if your host system is ready to run <Xplex />.
-</Card>
+</Steps>
+
 
 ## Choose Your Adventure
 
-Brace yourself, <Badge text="you're all set" /> to install <Xplex /> and there are two ways to go on about it:
+If you're ready to install <Xplex />, take one of these paths to set it up:
 
 <CardGrid>
   <Card title="Recommended" icon="seti:docker">
     <LinkCard
-      title="Run it with Docker"
-      description="The easiest, one-and-done way to get started with <b>xplex</b>."
+      title="Run with Docker"
+      description="Simple, one-and-done way to get started with <b>xplex</b>&mdash;in 5-10min."
       href="/setup/docker"
     />
   </Card>
-  <Card title="Are you sure?" icon="linux">
+  <Card title="Experimental" icon="linux">
     <LinkCard
-      title="Setup & run it manually"
-      description="For complete control & flexibility, at the cost of convenience."
+      title="Run native setup"
+      description="Complete control & flexibility for power users to tinker with."
       href="/setup/native"
     />
   </Card>
 </CardGrid>
 
-The recommend method (using Docker) will take **altogether 5-10min** to set it all up... and that's including signing up to a [cloud provider](/intro#how-much-does-it-cost). Whereas the manual method will take considerably longer (from 30min to a few hours), depending on your hardware and software environment.
+## Post-installation Steps
 
-But for some reason, if you **really need** to customize or rebuild <Xplex />'s internal components&mdash;either to fit your specific requirements or to set up a development environment&mdash;then you may want to manually build and install it. The guide is there only to point you towards the right direction; but if you're taking this path, then hopefully you know what you're doing.
+Once <Xplex /> is installed & <Xplex isHQ /> dashboard is accessible&mdash;you need to set the ingest URLs of your streaming platforms and update destination in the broadcast software to start multi-streaming.
+
+<Card title="<a href='/setup/postinstall'>Post-installation Configurations</a>" icon="seti:config">
+  Post-installation steps to configure <Xplex /> for multi-streaming.
+</Card>

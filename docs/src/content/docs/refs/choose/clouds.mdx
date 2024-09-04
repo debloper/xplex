@@ -1,26 +1,32 @@
 ---
 title: Cloud Host Provider
 description: A guide to help you choose the right cloud provider to run xplex.
+prev:
+  link: /refs/choose/hosts
+  label: Host System Type
+next:
+  link: /setup
+  label: Set up Overview
 ---
 import Xplex from '@components/Xplex.astro';
 import { Badge, Card, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 :::tip[Free Test Run]
-The referral sign up links will give you ample credits to try <Xplex /> for a few months at no cost.
+The referral sign up links will give you ample credits to try <Xplex /> at no cost to you:
 
 <Tabs>
   <TabItem label="DigitalOcean">
-    <Card title="<a href='https://m.do.co/c/97a76c3ca7ad' title='DigitalOcean Referral Sign Up Link' target='_blank'>Sign up to DigitalOcean</a>" icon="information">
+    <Card title="<a href='https://m.do.co/c/97a76c3ca7ad' title='DigitalOcean Referral Sign Up Link' target='_blank'>Sign up to DigitalOcean 🔗</a>" icon="information">
       Use the link to get $200 starting credit on DigitalOcean for 2 months.
     </Card>
   </TabItem>
   <TabItem label="Linode">
-    <Card title="<a href='https://login.linode.com/signup' title='Linode Sign Up Link' target='_blank'>Sign up to Linode</a>" icon="information">
+    <Card title="<a href='https://login.linode.com/signup' title='Linode Sign Up Link' target='_blank'>Sign up to Linode 🔗</a>" icon="information">
       Linode sign up link (no referral yet&mdash;you have to pay out of pocket).
     </Card>
   </TabItem>
   <TabItem label="Vultr">
-    <Card title="<a href='https://www.vultr.com/?ref=9638716' title='Vultr Referral Sign Up Link' target='_blank'>Sign up to Vultr</a>" icon="information">
+    <Card title="<a href='https://www.vultr.com/?ref=9638716' title='Vultr Referral Sign Up Link' target='_blank'>Sign up to Vultr 🔗</a>" icon="information">
       Use the link to get $10 starting credit on Vultr for 1 months.
     </Card>
   </TabItem>
@@ -43,8 +49,10 @@ Here's a list of some popular cloud providers' <Badge text="cheapest" /> compute
 <details>
 <summary>If this is your first time setting up a cloud server, then start with [Vultr](https://www.vultr.com/?ref=9638716)</summary>
 - You can do a lot of trial & error with the $10 credit for a month.
-- You can run upto 4 parallel instances; so you can try different configurations.
+- You can run upto 4 parallel $2.5 instances; to try different configurations.
 - And if you mess up, you can just destroy the instance & start over.
+  - Instances are charged for the duration they're running.
+  - You're not billed twice for destroying and recreating instances.
 </details>
 
 <details>
