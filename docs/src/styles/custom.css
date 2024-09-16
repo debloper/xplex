@@ -50,7 +50,7 @@
 .card-grid {
   gap: clamp(1rem, 1vw, 1.5rem);
 }
-.card {
+.card.sl-flex {
   padding: clamp(1rem, 1vw, 1.5rem);
   border-radius: 0.5rem;
 }
