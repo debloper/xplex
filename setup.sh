@@ -1,9 +1,11 @@
 #!/bin/bash
+
+# assume current working directory is cloned xplex repository
 export WORKDIR=$(pwd)
 
 # create a temporary working directory
-mkdir -p /tmp/xplex
-cd /tmp/xplex
+mkdir build
+cd build
 
 # download the source code for nginx, openssl, pcre, rtmp, and zlib
 export v_NGINX=1.26.1
@@ -22,7 +24,7 @@ wget https://zlib.net/fossils/zlib-${vm_ZLIB}.tar.gz
 cat *.tar.gz | tar -izxvf -
 
 # configure nginx with rtmp module
-cd /tmp/xplex/nginx-${v_NGINX}
+cd ${WORKDIR}/build/nginx-${v_NGINX}
 
 ./configure \
     --with-openssl=../openssl-${vm_OSSL} \
@@ -43,13 +45,20 @@ cp -r ${WORKDIR}/app/* /opt/xplex/
 cd /opt/xplex/
 npm install
 
-# start xplex-hq
-nohup npm start &
-
-# start nginx with rtmp
-/usr/local/nginx/sbin/nginx
+# add nginx-rtmp and xplex-hq as startup services
+cd ${WORKDIR}
+cp daemons/*.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable xplex-hq.service
+systemctl start xplex-hq.service
+systemctl enable nginx-rtmp.service
+systemctl start nginx-rtmp.service
 
 # cleanup & exit
-rm -rf /tmp/xplex
+rm -rf ${WORKDIR}/build
+echo -e "\033[0;33mInstalled nginx-rtmp to /usr/local/nginx/ \033[0m"
+echo -e "\033[0;33mInstalled xplex-hq to /opt/xplex \033[0m"
+echo -e ""
 echo -e "\033[0;32mCongrats... xplex is now installed! \033[0m"
+echo -e ""
 exit 0

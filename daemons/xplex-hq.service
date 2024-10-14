@@ -1,0 +1,12 @@
+[Unit]
+Description=Run xplex-hq at startup
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=npm start --prefix /opt/xplex/
+User=root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

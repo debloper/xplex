@@ -1,0 +1,13 @@
+[Unit]
+Description=NGINX RTMP Server
+After=xplex-hq.service network.target
+Requires=xplex-hq.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/nginx/sbin/nginx -g 'daemon off;'
+User=root
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
