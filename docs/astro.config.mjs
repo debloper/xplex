@@ -1,11 +1,14 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import starlightImageZoom from 'starlight-image-zoom'
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://xplex.me',
   integrations: [
     starlight({
+      plugins: [starlightImageZoom()],
+      credits: true,
       title: 'xplex',
       logo: {
         src: './public/favicon.svg',
@@ -14,6 +17,9 @@ export default defineConfig({
       customCss: [
         './src/styles/custom.css',
       ],
+      components: {
+        Footer: './src/components/Footer.astro',
+      },
       head: [{
         tag: 'meta',
         attrs: {
@@ -25,16 +31,12 @@ export default defineConfig({
         github: 'https://github.com/debloper/xplex',
       },
       sidebar: [
-        { slug: 'quick-start' },
         {
           label: 'Introduction',
-          items: [
-            'intro/index',
-            'intro/internals',
-          ],
+          autogenerate: { directory: 'intro' },
         },
         {
-          label: 'How-to Setup',
+          label: 'How-to Guide',
           autogenerate: { directory: 'setup' },
         },
         {
@@ -42,18 +44,15 @@ export default defineConfig({
           items: [
             {
               label: 'Choose',
-              items: [
-                'refs/choose/hosts',
-                'refs/choose/clouds',
-              ],
+              autogenerate: { directory: 'refs/choose' },
             },
             {
               label: 'Check',
               autogenerate: { directory: 'refs/check' },
             },
             {
-              label: 'Manage',
-              autogenerate: { directory: 'refs/manage' },
+              label: 'Change',
+              autogenerate: { directory: 'refs/change' },
             },
           ],
         },

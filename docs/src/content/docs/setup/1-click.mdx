@@ -1,0 +1,102 @@
+---
+title: Run 1-click Deploy
+description: A comprehensive guide on how to setup xplex without CLI.
+next:
+  link: /setup/postinstall
+  label: Post-installation
+---
+import Xplex from '@components/Xplex.astro';
+import { LinkCard, Steps } from '@astrojs/starlight/components';
+
+:::note[**"1-click"** is a marketing term from DigitalOcean]
+In reality, you need more than 1 click. It stands to mean that you can deploy <Xplex /> without needing to use CLI. This page will give you a step-by-step visual guidance on how to do that.
+:::
+
+## Create DigitalOcean Account
+
+In order to deploy <Xplex /> as a 1-click Droplet, you need to log in to your DigitalOcean account. If you don't already have a DigitalOcean account, please create one by signing up with the following link:
+
+<LinkCard
+  title="Get $200 starting credit on new accounts"
+  href="https://m.do.co/c/986bbf7090cd"
+  description="This should give you enough credit for 60 days to try out <b>xplex</b> to its fullest extent."
+/>
+
+## Initiate <Xplex /> Deployment
+
+From Marketplace| From Dashboard
+:--------------:|:--------------:
+Either, visit <Xplex /> on [DigitalOcean Marketplace](https://marketplace.digitalocean.com/apps/xplex) & click on the `Create xplex Droplet` button | Or, from the [DigitalOcean dashboard](https://cloud.digitalocean.com/) click the `Create > Droplets` buttons on the top-right
+![marketplace](/vendors/digitalocean/droplet_create_marketplace.png) | ![dashboard](/vendors/digitalocean/droplet_create_dashboard.png)
+
+
+## Set Droplet Preferences
+
+Once in the droplet creation wizard, you need to go through a few steps to set up the droplet. Detailed steps have screenshots to guide you through the process.
+
+<Steps>
+
+1. <details>
+   <summary>Choose Region &mdash; for the nearest datacenter</summary>
+   **Closest datacenter region will ensure lowest latency**. Leave the datacenter ID (e.g. SFO1, SFO2, SFO3 in SFO region), and the VPC Network to whatever is chosen by default; you shouldn't have to change those, in general.
+
+   ![select droplet region](/vendors/digitalocean/droplet_region.png)
+   </details>
+
+2. <details>
+   <summary>Choose an image &mdash; the preconfigured snapshot</summary>
+   If you've started from 1-click link on <Xplex />'s marketplace listing page, then the correct latest image will already be selected for you&mdash;you don't have to do anything.
+
+   If you've manually started the process of creating a droplet, then search for `xplex` in the marketplace images & then click to select it.
+
+   ![select droplet image](/vendors/digitalocean/droplet_image.png)
+   </details>
+
+3. <details>
+   <summary>Choose Size &mdash; the smallest droplet is sufficient</summary>
+   <Xplex /> is a very lightweight solution. So, choose the `SHARED CPU` droplet type, and `Regular` as the CPU option. Click the arrow on the left of the list of droplet sizes to see the smallest one allowed, which should be $6/month.
+
+   ![select droplet size](/vendors/digitalocean/droplet_size.png)
+
+   :::tip[**Using an even smaller droplet**]
+   <Xplex /> can totally run on even smaller (e.g. the $4/month) droplets. But the DigitalOcean 1-click wizard doesn't allow selecting that. For that you have to start the droplet with normal Ubuntu image, and then install <Xplex /> with the [native](/setup/native) setup (advanced method).
+   :::
+   </details>
+
+4. <details>
+   <summary>Miscellaneous Choices &mdash; just leave them be</summary>
+    No need to change anything in the `Additional storage`, `Backups` etc. advanced options. Though you **can** configure the `Choose Authentication Method` section, **you absolutely don't have to**. Just leave them as they are, unless you have a good reason to change them.
+
+   ![select droplet misc](/vendors/digitalocean/droplet_misc.png)
+   </details>
+
+5. <details>
+   <summary>Confirm Choices &mdash; to create <Xplex /> instance</summary>
+   Leave the quantity to `1 Droplet`. You can change the hostname to something you prefer, over the one given by default&mdash;but you don't have to. If you use tags to organize droplets, you can do so&mdash;but again&mdash;you don't have to.
+
+   As the final step, click on `Create Droplet` button to confirm the choices & let it cook.
+
+   ![select droplet misc](/vendors/digitalocean/droplet_finalize.png)
+   </details>
+
+</Steps>
+
+## Get Droplet IP Address
+
+Once the droplet starts creating, you'll be taken to the dashboard. Wait for it to complete.
+
+You'll see the IP address of the droplet on the right side of the droplet name. Copy that IP address, as you'll need it to access the <Xplex /> instance.
+
+![get droplet info](/vendors/digitalocean/droplet_info.png)
+
+
+## Open <Xplex isHQ /> Dashboard
+
+Open a browser tab, paste the IP address of the droplet, and press <kbd>ENTER</kbd>. You'll see the <Xplex isHQ /> dashboard, which is the control panel for your <Xplex /> instance.
+
+![xplex HQ](/screenshots/xplex_hq.png)
+
+That's it... <Xplex /> is now live & ready for you to setup your [multi-streaming details](/setup/postinstall).
+
+<span style="font-size: 4rem;">🎉🎉🎉</span>
+

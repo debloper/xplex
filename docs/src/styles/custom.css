@@ -1,6 +1,6 @@
 /* Dark mode colors. */
 :root {
-  --sl-color-accent-low: #36113e;
+  --sl-color-accent-low: #331144;
   --sl-color-accent: #a400c0;
   --sl-color-accent-high: #e3b6ed;
   --sl-color-white: #ffffff;
@@ -10,11 +10,12 @@
   --sl-color-gray-4: #614e78;
   --sl-color-gray-5: #412e55;
   --sl-color-gray-6: #2f1c42;
+  --sl-color-gray-7: #251833;
   --sl-color-black: #1c1425;
 }
 /* Light mode colors. */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #ebc9f3;
+  --sl-color-accent-low: #eeccff;
   --sl-color-accent: #a700c3;
   --sl-color-accent-high: #4e0e5b;
   --sl-color-white: #1c1425;
@@ -28,9 +29,15 @@
   --sl-color-black: #ffffff;
 }
 /* Custom styles for specific elements */
+body {
+  background: radial-gradient(circle at 25% 25%, var(--sl-color-accent-low) 25%, var(--sl-color-black) 100%);
+}
 #elevator-pitch h3 {
   margin: 2rem auto;
   color: var(--sl-color-gray-3);
+}
+#elevator-pitch img {
+  margin: 5rem auto;
 }
 #acknowledgement a {
   text-decoration: none;

@@ -1,5 +1,5 @@
 ---
-title: Cloud Host Provider
+title: Cloud Host Providers
 description: A guide to help you choose the right cloud provider to run xplex.
 prev:
   link: /refs/choose/hosts
@@ -16,7 +16,7 @@ The referral sign up links will give you ample credits to try <Xplex /> at no co
 
 <Tabs>
   <TabItem label="DigitalOcean">
-    <Card title="<a href='https://m.do.co/c/97a76c3ca7ad' title='DigitalOcean Referral Sign Up Link' target='_blank'>Sign up to DigitalOcean 🔗</a>" icon="information">
+    <Card title="<a href='https://m.do.co/c/986bbf7090cd' title='DigitalOcean Referral Sign Up Link' target='_blank'>Sign up to DigitalOcean 🔗</a>" icon="information">
       Use the link to get $200 starting credit on DigitalOcean for 2 months.
     </Card>
   </TabItem>
@@ -56,7 +56,7 @@ Here's a list of some popular cloud providers' <Badge text="cheapest" /> compute
 </details>
 
 <details>
-<summary>If you're already familiar with cloud servers, then start with [DigitalOcean](https://m.do.co/c/97a76c3ca7ad)</summary>
+<summary>If you're already familiar with cloud servers, then start with [DigitalOcean](https://m.do.co/c/986bbf7090cd)</summary>
 - They have a lot of (and arguably, the best) documentation & community support.
 - You can get $200 credit for 2 months, which is a lot of time to get comfortable.
 </details>
@@ -67,57 +67,3 @@ Here's a list of some popular cloud providers' <Badge text="cheapest" /> compute
 - You can always switch to a different provider later.
 - The best part of using Docker is that&mdash;apart from the IP addresses of the hosts&mdash;the end result should be predictably the exact same in all cases.
 </details>
-
-## Create a new instance with Docker
-
-For the smoothest experience, <Badge text="create instances with Docker preinstalled" /> & choose the <Badge text="closest data center location" /> to you.
-
-As mentioned before, you may choose the smallest offered instance size to run <Xplex />.
-
-<Tabs>
-  <TabItem label="DigitalOcean">
-    🚀 Start with DigitalOcean's [1-click deployment image](https://marketplace.digitalocean.com/apps/docker) with Docker preinstalled
-
-    📑 Use DigitalOcean's [getting started guide](https://docs.digitalocean.com/products/droplets/getting-started/) for reference
-  </TabItem>
-  <TabItem label="Linode">
-    🚀 Start with Linode's [1-click deployment image](https://www.linode.com/marketplace/apps/linode/docker/) with Docker preinstalled
-
-    📑 Use Linode's [getting started guide](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-compute-instances) for reference
-  </TabItem>
-  <TabItem label="Vultr">
-    🚀 Start with Vultr's [1-click deployment image](https://www.vultr.com/marketplace/apps/docker)  with Docker preinstalled
-
-    📑 Use Vultr's [getting started guide](https://www.vultr.com/marketplace/apps/docker#getting-started) for reference
-  </TabItem>
-</Tabs>
-
-
----
-
-
-
-## Remote login to the host over SSH
-
-Cloud providers have official docs on the best way to connet to their instances:
-
-<Tabs>
-  <TabItem label="DigitalOcean">
-    📡 Remote access DigitalOcean droplets [over SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/)
-  </TabItem>
-  <TabItem label="Linode">
-    📡 Remote access Linode instances [over SSH](https://techdocs.akamai.com/cloud-computing/docs/set-up-and-secure-a-compute-instance#connect-to-the-instance)
-  </TabItem>
-  <TabItem label="Vultr">
-    📡 Remote access Vultr VPS [over SSH](https://docs.vultr.com/how-to-access-your-vultr-vps)
-  </TabItem>
-</Tabs>
-
----
-
-But if you're familiar with remote logins, then apart from the cloud specific terminologies & UX differences, the process is pretty much the same everywhere.
-
-If you're new to cloud servers, then remote login is a way to get access&mdash;over terminal&mdash;to the cloud server you just created. For the login terminal, you hava a couple of choices:
-- The cloud provider's built-in web-based terminal on their dashboard
-- The latest Windows Terminal now supports SSH&mdash;PuTTY is not needed
-- And of course, on macOS or Linux, you can use the built-in terminal to login

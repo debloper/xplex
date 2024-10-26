@@ -1,5 +1,4 @@
-## <center>THE RENAISSANCE WILL NOT BE TELEVISED</center>
-## <center>but it will be multi-streamed LIVE—with xplex</center>
+![xplex banner](docs/public/preview.png)
 
 [xplex](https://xplex.me/) —your personal, self-hosted, open source, multi-streaming server
 

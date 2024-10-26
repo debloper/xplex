@@ -6,21 +6,68 @@ next:
   label: Post-installation
 ---
 import Xplex from '@components/Xplex.astro';
-import { Steps } from '@astrojs/starlight/components';
+import { Badge, Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+:::tip[Balanced Approach]
+Running <Xplex /> with Docker is a good balance between ease & flexibility. Unlike [1-click setup](/setup/1-click), you're not tied to a cloud provider; and unlike [native setup](/setup/native), there's not much to go sideways.
+:::
+
+## Create instance
+
+It's recommended to <Badge text="create instances with Docker preinstalled" /> for ease of operation. You can use the smallest instance size, but choose the <Badge text="closest data center location" /> to you.
+
+<Tabs>
+  <TabItem label="DigitalOcean">
+    🚀 Start with DigitalOcean's [1-click docker image](https://marketplace.digitalocean.com/apps/docker)
+
+    📡 Remote access DigitalOcean droplets [over SSH](https://docs.digitalocean.com/products/droplets/how-to/connect-with-ssh/)
+
+    📑 Use DigitalOcean's [getting started guide](https://docs.digitalocean.com/products/droplets/getting-started/) for reference
+  </TabItem>
+  <TabItem label="Linode">
+    🚀 Start with Linode's [1-click docker image](https://www.linode.com/marketplace/apps/linode/docker/)
+
+    📡 Remote access Linode instances [over SSH](https://techdocs.akamai.com/cloud-computing/docs/set-up-and-secure-a-compute-instance#connect-to-the-instance)
+
+    📑 Use Linode's [getting started guide](https://techdocs.akamai.com/cloud-computing/docs/getting-started-with-compute-instances) for reference
+  </TabItem>
+  <TabItem label="Vultr">
+    🚀 Start with Vultr's [1-click docker image](https://www.vultr.com/marketplace/apps/docker)
+
+    📡 Remote access Vultr VPS [over SSH](https://docs.vultr.com/how-to-access-your-vultr-vps)
+
+    📑 Use Vultr's [getting started guide](https://www.vultr.com/marketplace/apps/docker#getting-started) for reference
+  </TabItem>
+</Tabs>
+
+---
+
+:::note[Alternatively]
+You can also start with a generic linux server, and manually [install Docker](/refs/check/docker) on it.
+:::
+
+## Run Checks
+
+If you're using an existing homelab or cloud server with other services running on it, or even on a new system with preinstalled software packages&mdash;validate that it meets the requirements to run <Xplex />:
 
 <Steps>
 
-1. ```bash title="Run the xplex container"
-   docker run -d --name xplex -p 80:80 -p 1935:1935 xplex/xplex
-   ```
-
-2. Check the [firewall guide](/refs/manage/firewall) to ensure the host allows traffic on ports `80` (HTTP) & `1935` (RTMP).
-
-3. Open a browser & access your <Xplex isHQ /> dashboard at `http://<hostname-or-IP>/`
+1. [**Verify superuser access**](/refs/check/superuser)
+2. [**Ensure Docker is installed**](/refs/check/docker)
+3. [**Look out for conflicting nginx**](/refs/check/nginx)
+4. [**Confirm required ports are free**](/refs/check/ports)
+5. [**Set firewall rules to open the ports**](/refs/change/firewall)
 
 </Steps>
 
-<span style="font-size: 4rem;">🎉🎉🎉</span>
+## Run Container
+
+```bash title="Run the xplex container"
+docker run -d --name xplex -p 80:80 -p 1935:1935 xplex/xplex
+```
+
+Open a browser & access your <Xplex isHQ /> dashboard at `http://<hostname-or-IP>/`
 
 That's it... you now have a running <Xplex /> instance, which is ready for the [post-installation setup](/setup/postinstall).
 
+<span style="font-size: 4rem;">🎉🎉🎉</span>

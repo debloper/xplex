@@ -1,5 +1,5 @@
 ---
-title: Run native setup
+title: Run Native Setup
 description: A comprehensive guide on how to setup xplex on a native or virtual host.
 prev:
   link: /setup
@@ -9,6 +9,10 @@ import Xplex from '@components/Xplex.astro';
 import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 This is **not the recommended way to setup <Xplex />** (even as a developer environment), but if you're feeling adventurous&mdash;to build and deploy it without containerization, then here's how to do it.
+
+:::caution[Brevity Alert]
+This method expects you to be proficient with system administration; so trivial directions like ensuring superuser access, hanlding package manager etc. are kept aside. If you're not comfortable with these tasks, please consider using the [1-click](/setup/1-click) or [Docker](/setup/docker) setup instead.
+:::
 
 ## Prerequisites
 
@@ -104,14 +108,13 @@ This is **not the recommended way to setup <Xplex />** (even as a developer envi
    </details>
 
 3. <details>
-   <summary>Manage Firewall Rules</summary>
-
-   <Xplex /> uses port `80` for HTTP & port `1935` for RTMP. Please make sure the [firewall on the host system is configured](/refs/manage/firewall) to allow traffic on these ports.
-
+   <summary>Run checks</summary>
+   - [**Look out for conflicting nginx**](/refs/check/nginx)
+   - [**Confirm required ports are free**](/refs/check/ports)
+   - [**Set firewall rules to open the ports**](/refs/change/firewall)
    </details>
 
 </Steps>
-
 
 ## Setup Script
 

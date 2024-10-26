@@ -3,40 +3,23 @@ title: Technical Overview
 description: The explanation of xplex's technical implementation.
 ---
 import Xplex from '@components/Xplex.astro';
-import { FileTree } from '@astrojs/starlight/components';
+import { FileTree, Steps } from '@astrojs/starlight/components';
 
-## Objective Abstract
+## Abstract
 
 At its core, <Xplex /> is an [rtmp-enabled](https://github.com/arut/nginx-rtmp-module) [nginx server](http://nginx.org/) that pushes identical copies of incoming RTMP streams to one or more pre-configured RTMP endpoints.
 
-It also provides a simple web-based dashboard with REST API &mdash; called <Xplex isHQ /> &mdash; to conveniently manage the ingest URLs.
+It also provides a simple web-based dashboard with REST API&mdash;called <Xplex isHQ />&mdash;to conveniently manage the ingest URLs.
 
-## Design Principles
-
-<details>
-<summary>Effective</summary>
-make it do what it's supposed to do
-</details>
-<details>
-<summary>Efficient</summary>
-do it with minimal teleological overhead
-</details>
-<details>
-<summary>Elegant</summary>
-and with fluent grace of pieces falling in place
-</details>
-<details>
-<summary>Extensible</summary>
-while leaving room for progressive enhancements
-</details>
-
-## Repository Overview
+## Structure
 
 <FileTree>
 
 - .github/ ---> actions & workflows automations
 - app/ -------> source files for <Xplex isHQ /> server
 - conf/ ------> nginx configs for HTTP & RTMP
+- daemons/ ---> systemd service management units
+- distro/ ----> distribution specific package config
 - docs/ ------> website with landing page & docs
 - .gitignore
 - Dockerfile -> containerization instructions
@@ -47,35 +30,42 @@ while leaving room for progressive enhancements
 
 </FileTree>
 
-## Operational Steps
+## Operations
 
-- **There's no official `nginx-rtmp` container; so first, we built one from scratch.**
-  - You can build it by explicitly mentioning the target as `nginx` instead of `xplex` as the default target; e.g. `docker build --target nginx -t xplex/nginx .`
-- **Next up we implant the `nginx-rtmp` installation on a Node.js base image.**
-  - This is simpler than installing Node.js on the `nginx-rtmp` image.
-  - We may want to move out or refactor Node.js dependency in future.
-- **Then we apply configurations for the HTTP & RTMP servers.**
-  - The HTTP server reverse proxies the <Xplex /> server to run on port 8080 to port 80.
-  - Reverse proxying is not functionally necessary for the setup to work (API or stream).
-  - But accessing dashboard over port 80 the easiest way to validate nginx build success.
-- **Then we install <Xplex isHQ /> as a simple Node.js app to manage the ingest URLs**
-- **Finally, we start the processes inside the container in sequence**
-  - The Node.js server is started first & sent to background
-  - Then the nginx process is started with daemon mode off
+<Steps>
 
-## Future Roadmap
+1. **There's no official `nginx-rtmp` container; so first, we built one from scratch.**
+   > You can build it by explicitly mentioning the target as `nginx` instead of `xplex` as the default target; e.g. `docker build --target nginx -t xplex/nginx .`
 
+2. **Next up we implant the `nginx-rtmp` installation on a Node.js base image.**
+   > This is simpler than installing Node.js on the `nginx-rtmp` image. We may want to move out or refactor Node.js dependency in future.
+
+3. **Then we apply configurations for the HTTP & RTMP servers.**
+   > The HTTP server reverse proxies the <Xplex isHQ /> server to run on port 8080 to port 80.
+   > Reverse proxying is not functionally necessary for the setup to work (API or stream).
+   > But accessing dashboard over port 80 the easiest way to validate nginx build success.
+
+4. **Then we install <Xplex isHQ /> as a simple Node.js app to manage the ingest URLs**
+   > This is the reason for our Node.js dependency, and it needs a massive overhaul.
+
+5. **Finally, we start the processes inside the container in sequence**
+   > The Node.js server is started first, ready for nginx to proxy. Then the nginx process is started with daemon mode off.
+
+</Steps>
+
+## Roadmap
+
+- [ ] ARM, RISC-V support
+- [ ] Unit & integration tests
 - [ ] <Xplex isHQ /> improvements
 - [ ] Let's Encrypt integration
-- [ ] Unit & integration tests
-- [ ] x86, ARM, RISC-V support
-
-## Stretch Goals
-- [ ] RTMPS support
-- [ ] RTSP support
-- [ ] SRT support
-- [ ] HLS support
-- [ ] NDI support
+- [ ] 1-click vendor intergrations
+- [ ] Stretch goals:
+  - [ ] RTMPS support
+  - [ ] RTSP support
+  - [ ] SRT support
+  - [ ] HLS support
+  - [ ] NDI support
 - [ ] ...and more
 
 :::note[Missing Something?]
