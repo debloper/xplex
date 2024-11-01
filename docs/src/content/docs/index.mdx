@@ -27,8 +27,10 @@ hero:
       icon: right-caret
 ---
 import Xplex from '@components/Xplex.astro';
+import { Image } from 'astro:assets';
+import banner from 'public/xplex-xplained.png';
 
 <center id="elevator-pitch">
 <h3><Xplex />&mdash;your personal, self-hosted, open source, multi-streaming server</h3>
-![xplex explained](/xplex-xplained.excalidraw.svg)
+<Image src={ banner } alt="multi-streaming using xplex" data-zoom-off />
 </center>

@@ -38,6 +38,7 @@ body {
 }
 #elevator-pitch img {
   margin: 5rem auto;
+  filter: drop-shadow(0 0 0.125rem var(--sl-color-accent));
 }
 #acknowledgement a {
   text-decoration: none;
