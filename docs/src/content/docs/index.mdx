@@ -28,9 +28,11 @@ hero:
 ---
 import Xplex from '@components/Xplex.astro';
 import { Image } from 'astro:assets';
-import banner from 'public/xplex-xplained.png';
+import banner from 'public/xplex-banner.png';
+import xposed from 'public/xplex-xposed.excalidraw.svg';
 
 <center id="elevator-pitch">
-<h3><Xplex />&mdash;your personal, self-hosted, open source, multi-streaming server</h3>
-<Image src={ banner } alt="multi-streaming using xplex" data-zoom-off />
+<h2><Xplex />&mdash;your personal, self-hosted, open source, multi-streaming server</h2>
+<Image src={ banner } id="xplex-banner" alt="boy multi-streaming" data-zoom-off />
+<Image src={ xposed } id="xplex-xposed" alt="exposition of xplex" data-zoom-off />
 </center>
