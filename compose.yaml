@@ -13,6 +13,9 @@ services:
       - type: bind
         source: ./data/ingests.json
         target: /xplex/ingests.json
+      - type: bind
+        source: ./data/xplex.conf
+        target: /usr/local/nginx/conf/xplex.conf
     ports:
       - 8088:80 # Web UI
       - 1935:1935 # Stream Port
