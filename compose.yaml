@@ -1,0 +1,19 @@
+
+services:
+  xplex:
+    image: ghcr.io/debloper/xplex:latest
+    container_name: xplex
+    #
+    # Create a file named ingests.json in ./data
+    # xplex reads and writes data to this file.
+    #
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - type: bind
+        source: ./data/ingests.json
+        target: /xplex/ingests.json
+    ports:
+      - 8088:80 # Web UI
+      - 1935:1935 # Stream Port
+    restart: unless-stopped
