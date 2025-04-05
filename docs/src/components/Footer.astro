@@ -9,12 +9,20 @@ import type { Props } from '@astrojs/starlight/props';
   <a class="kudos sl-flex" href="https://github.com/sponsors/debloper">
     🌱 support <Xplex /> with your sponsorship ❤️
   </a>
+  <nav class="footer-links">
+    <a href="/about">About Us</a>
+	•
+    <a href="/about/contact">Contact Us</a>
+	•
+    <a href="/about/privacy">Privacy Policy</a>
+	•
+    <a href="/about/terms">Terms of Services</a>
+  </nav>
 </footer>
 
 <style>
 	footer {
 		flex-direction: column;
-		gap: 1.5rem;
 	}
 	.meta {
 		gap: 0.75rem 3rem;
@@ -29,11 +37,26 @@ import type { Props } from '@astrojs/starlight/props';
 	}
 	.kudos {
 		gap: 0.5em;
-		margin: 1.5rem auto;
+		margin: 1rem auto;
 		text-decoration: none;
 		color: var(--sl-color-gray-4);
 	}
 	.kudos:hover {
+		color: var(--sl-color-gray-2);
+	}
+	.footer-links {
+		display: flex;
+		gap: 1rem;
+		justify-content: center;
+		margin-top: 1rem;
+	}
+
+	.footer-links a {
+		color: var(--sl-color-gray-4);
+		text-decoration: none;
+	}
+
+	.footer-links a:hover {
 		color: var(--sl-color-gray-2);
 	}
 </style>
