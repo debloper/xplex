@@ -3,7 +3,7 @@ name: Publish Docker Container
 on:
   push:
     tags: [ 'v*' ]
-    branches: [ "master" ]
+    # branches: [ "master" ]
   workflow_dispatch:
 
 env:
