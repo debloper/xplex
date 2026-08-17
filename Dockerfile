@@ -51,6 +51,7 @@ RUN ./configure \
     --with-zlib=../zlib-${vm_ZLIB} \
     --add-module=../nginx-rtmp-module-${vm_RTMP} \
     --add-module=../nginx-srt-module-${vm_SRTP} \
+    --with-http_ssl_module \
     --with-stream --with-threads
 
 # Build & install nginx
